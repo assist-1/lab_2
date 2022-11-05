@@ -1,0 +1,3 @@
+C:/Users/proko/CLionProjects/laba/lab_2/cmake-build-debug/CMakeFiles/laba.dir
+C:/Users/proko/CLionProjects/laba/lab_2/cmake-build-debug/CMakeFiles/edit_cache.dir
+C:/Users/proko/CLionProjects/laba/lab_2/cmake-build-debug/CMakeFiles/rebuild_cache.dir

@@ -1,0 +1,8 @@
+# ninja log v5
+2	239	6893514975924879	build.ninja	754647b896eab756
+5	335	6891742059512761	CMakeFiles/laba.dir/function.cpp.obj	3a328bdfb05f442c
+335	509	6891742061213219	laba.exe	4887bada3d4c4a69
+7	542	6891682586803319	CMakeFiles/laba.dir/main.cpp.obj	f73d0850f896134d
+15	404	6893515164021340	CMakeFiles/laba.dir/function.cpp.obj	532c8604d4e6e5ae
+6	429	6893515164276502	CMakeFiles/laba.dir/main.cpp.obj	c5ecaf904aaddbc
+429	601	6893515165963933	laba.exe	4887bada3d4c4a69
