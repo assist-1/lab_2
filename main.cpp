@@ -1,5 +1,8 @@
 #include <cstring>
+#include <fstream>
 #include <iostream>
+
+#include "calculator.h"
 
 void usage() {
     std::cerr << "Usage: lab_2 [--forward] [--file filename] [--reverse]\n"
@@ -32,6 +35,17 @@ int main(int argc, char **argv) {
         std::cerr << "You have to choose --forward or --file\n";
         usage();
         return EXIT_FAILURE;
+    }
+
+    if (file) {
+        std::fstream input_stream(filename);
+        if (!input_stream) {
+            std::cerr << "Can't open file: " << filename << std::endl;
+            return EXIT_FAILURE;
+        }
+        calculate(input_stream, reverse);
+    } else {
+        calculate(std::cin, reverse);
     }
     return EXIT_SUCCESS;
 }
