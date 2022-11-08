@@ -2,23 +2,23 @@
 #include <fstream>
 
 #include "function.h"
+std::string str;
 
 int main(int argc, char *argv[]){
     double intermediate;
     for(int i = 0; i < 200; i++) {val[i] = 0; Sign[i] = '0'; hooks[i] = 0;}
-    char str[200];
     char token[200];
     if (argc == 1) {
-        std::cerr << "Enter flag " << std::endl;
+        std::cerr << "Enter flag --reverse or --forward " << std::endl;
         goto stop;
     }
     else if (argc >= 2 && std::string(argv[1]) == "--forward") {
         if(argc == 2) {
-
             std::cout
                     << "Enter an expression, note that all numbers and characters must be entered separated by commas. For example: 2 + ( 2 * 2 )"
                     << std::endl;
-            std::cin.getline(str, 200, '\n');
+            std::cin.getline(str1, 200, '\n');
+            Help(0);
         } else if (std::string(argv[2]) == "--file"){
             if(argc != 4) {
                 std::cerr << "wrong number of arguments" << std::endl;
@@ -26,31 +26,30 @@ int main(int argc, char *argv[]){
             }
             else {
                 std::ifstream file (argv[3]);
-                file.getline(str,200, '\n');
+                file.getline(str1,200, '\n');
+                Help(0);
             }
         }
         int i, j;
-        for (i = 0;; i++) {
-            for (j = 0; str[i] != ' ' && str[i]; j++, i++) {
+        for (i = 0; str[i] != 0; i++) {
+            for (j = 0; str[i] != ' ' && str[i] != 0; j++, i++) {
                 token[j] = str[i];
             }
             if (PrSigns(str[i - 1]) != 0 && countVal == 0){
-                std::cerr << "Wrong expression" << std::endl;
+                std::cerr << "Wrong expression4" << std::endl;
                 goto stop;
             }
             if (str[i - 1] == '(') {
                 if (countVal != countSign) {
-                    std::cerr << "Wrong expression" << std::endl;
+                    std::cerr << "Wrong expression5" << std::endl;
                     goto stop;
-                    flag = 1;
                 }
                 hooks[countHooks1] = countVal;
-//                std::cout << countVal << " 4345" << std::endl;
                 countHooks1++;
             }
             if (str[i - 1] == ')') {
                 if (countVal - 1 != countSign) {
-                    std::cerr << "Wrong expression" << std::endl;
+                    std::cerr << "Wrong expression6" << std::endl;
                     flag = 1;
                 }
                 endHooks(hooks[countHooks1 - countHooks2 - 1]);
@@ -63,15 +62,14 @@ int main(int argc, char *argv[]){
                 }
                 if (countVal - 2 >= hooks[countHooks1 - 1] || countHooks1 == countHooks2) {
                     CompareSign(Sign[countSign - 1], str[i - 1]);
-//                    std::cout << hooks[countHooks1] << " " << countVal << " we ";
-
                 }
                 if(countVal == 0){
-                    std::cerr << "Wrong expression" << std::endl;
+                    std::cerr << "Wrong expression7" << std::endl;
                     flag = 1;
                 }
                 Sign[countSign] = str[i - 1];
                 countSign++;
+
             }
             token[j] = '\0';
             intermediate = atof(token);
@@ -86,20 +84,11 @@ int main(int argc, char *argv[]){
             if (flag == 1)
                 goto stop;
             if (!str[i]) break;
-//            for (int k = 0; k < 7; k++) {
-//                std::cout << val[k] << " ^ " << Sign[k] << std::endl;
-//            }
         }
-        std::cout << std::endl;
-
         if (countVal - 1 != countSign) {
-            std::cerr << "Wrong expression" << std::endl;
+            std::cerr << "Wrong expression8" << std::endl;
             goto stop;
         }
-//    std::cout << counter << std::endl;
-//        for (int k = 0; k < 10; k++) {
-//            std::cout << val[k] << " " << Sign[k] << std::endl;
-//        }
         FinishStep();
         if (countHooks1 != countHooks2) {
             std::cerr << "wrong number of hooks";
@@ -113,7 +102,8 @@ int main(int argc, char *argv[]){
             std::cout
                     << "Enter an expression, note that all numbers and characters must be entered separated by commas. For example: 2 2 2 + *"
                     << std::endl;
-            std::cin.getline(str, 200, '\n');
+            std::cin.getline(str1, 200, '\n');
+            Help(1);
         } else if (std::string(argv[2]) == "--file"){
             if(argc != 4) {
                 std::cerr << "wrong number of arguments" << std::endl;
@@ -121,7 +111,8 @@ int main(int argc, char *argv[]){
             }
             else {
                 std::ifstream file (argv[3]);
-                file.getline(str,200, '\n');
+                file.getline(str1,200, '\n');
+                Help(1);
             }
         }
         int i, j;
@@ -130,12 +121,12 @@ int main(int argc, char *argv[]){
                 token[j] = str[i];
             }
             if (PrSigns(str[i - 1]) != 0 && countVal == 0){
-                std::cerr << "Wrong expression" << std::endl;
+                std::cerr << "Wrong expression9" << std::endl;
                 goto stop1;
             }
             if (PrSigns(str[i - 1]) != 0 && str[i - 2] == ' ') {
                 if(countVal == 0){
-                    std::cerr << "Wrong expression" << std::endl;
+                    std::cerr << "Wrong expression10" << std::endl;
                     flag = 1;
                 }
                 Sign[countSign] = str[i - 1];
@@ -156,17 +147,17 @@ int main(int argc, char *argv[]){
             if (flag == 1)
                 goto stop;
             if (!str[i]) break;
-//            for (int k = 0; k < 7; k++) {
-//                std::cout << val[k] << " ^ " << Sign[k] << std::endl;
-//            }
         }
-//        for (int k = 0; k < 10; k++) {
-//            std::cout << val[k] << " " << Sign[k] << std::endl;
-//        }
         StepReverse(countSign);
+        if (countVal - 1 != countSign) {
+            std::cerr << "Wrong expression8" << std::endl;
+            goto stop1;
+        }
         if (flag == 0)
             std::cout << "Result: " << val[0] << std::endl;
         stop1:
         return 0;
-    }
+    } else
+        std::cerr << "Enter flag --reverse or --forward " << std::endl;
+    return 0;
 }
