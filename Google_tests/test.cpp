@@ -80,7 +80,7 @@ TEST (Enter, n1) {
     ASSERT_EQ(0, EnterCheck(argc));
 }
 TEST (Enter, n2) {
-    int argc = 2;
+    int argc = 1;
     ASSERT_EQ(0, EnterCheck(argc));
 }
 
