@@ -22,11 +22,11 @@ int main(int argc, char* argv[])
     }
     else if (argc == 2) {
         if (!strcmp(argv[1], "--forward")) {
-            std::cout << "ВВЕДИТЕ ВЫРАЖЕНИЕ С ПРОБЕЛАМИ И ПОСТАВЬТЕ В КОНЦЕ ВЫРАЖЕНИЯ \'=\'" << std::endl;
+            std::cout << "Put \'=\' at the end" << std::endl;
             answer = pr();
         }
         else if (!strcmp(argv[1], "--reverse")) {
-            std::cout << "ВВЕДИТЕ ВЫРАЖЕНИЕ С ПРОБЕЛАМИ В ОБРАТНОЙ ПОЛЬСКОЙ НОТАЦИИ И ПОСТАВЬТЕ В КОНЦЕ ВЫРАЖЕНИЯ \'=\'" << std::endl;
+            std::cout << "Put \'=\' at the end" << std::endl;
             answer = OPN();
         }
         else {
