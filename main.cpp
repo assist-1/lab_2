@@ -43,9 +43,9 @@ int main(int argc, char **argv) {
             std::cerr << "Can't open file: " << filename << std::endl;
             return EXIT_FAILURE;
         }
-        calculate(input_stream, reverse);
+        std::cout << calculate(input_stream, reverse) << std::endl;
     } else {
-        calculate(std::cin, reverse);
+        std::cout << calculate(std::cin, reverse) << std::endl;
     }
     return EXIT_SUCCESS;
 }

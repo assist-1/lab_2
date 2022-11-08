@@ -1,14 +1,12 @@
 #include "token.h"
 
-Token::Token(std::istream& input_stream) {
+Token::Token(std::istream &input_stream) {
     while (isspace(input_stream.peek())) { // пропускаем пустое пространство
         input_stream.get();
     }
     char c = (char) input_stream.get();
     switch (c) {
         case '*':
-        case '(':
-        case ')':
         case '-':
         case '+':
         case '/':

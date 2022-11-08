@@ -3,6 +3,6 @@
 
 #include <iostream>
 
-void calculate(std::istream &input_stream, bool reverse);
+int calculate(std::istream &input_stream, bool reverse);
 
 #endif //LAB_2_CALCULATOR_H
