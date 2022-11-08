@@ -169,8 +169,6 @@ int ConsoleForwardCalculate() {
             continue;
         }
     }
-    delete[] Values;
-    delete[] Operations;
     return Values[0].value;
 }
 
@@ -281,8 +279,6 @@ int FileForwardCalculate(char *filepath) {
             continue;
         }
     }
-    delete[] Values;
-    delete[] Operations;
     return Values[0].value;
 }
 
@@ -367,8 +363,6 @@ int ConsoleReverseCalculate() {
             continue;
         }
     }
-    delete[] Values;
-    delete[] Operations;
     return Values[0].value;
 }
 
@@ -423,7 +417,5 @@ int FileReverseCalculate(char *filepath) {
             continue;
         }
     }
-    delete[] Values;
-    delete[] Operations;
     return Values[0].value;
 }
