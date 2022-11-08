@@ -7,6 +7,7 @@
 #include <cstring>
 #include "calculator.h"
 using namespace std;
+// #define DEBUG
 
 
 int level(char s)
@@ -31,9 +32,16 @@ bool in(string s, char symbol)//проверяет наличие символа
     return false;
 }
 
+
+
+
+
 float func(string n1, string n2, char func)//два числа фигачит
 {
-    // cout << n2 + " " + func + " " + n1 + "\n";
+    #ifdef DEBUG
+    cout << n2 + " " + func + " " + n1 + "\n";
+    #endif//DEBUG
+    
     if (func == '+') return stof(n1) + stof(n2);
     if (func == '-') return stof(n2) - stof(n1);
     if (func == '*') return stof(n1) * stof(n2);
@@ -46,6 +54,10 @@ int mistake(int num)//сообщение об ошибке
     cout << "\nOoops, you made a mistake.\n\nError " + to_string(num) + "\n";
     return EXIT_FAILURE;
 }
+
+
+
+
 
 
 
@@ -107,18 +119,18 @@ int calculate_forward(bool file)//основная функция, считаю�
 
         else if(in("0123456789.", s[i]))
         {   
-            if(s[i] == '.' && n =="") return(mistake(2));//ошибка число, начинается с точки
+            if(s[i] == '.' && n =="") return(mistake(2));//ошибка, число начинается с точки
             n += s[i];
         }
-        else if(s[i] != ' ')//неопознанный символ
+        else if(s[i] != ' ' )//неопознанный символ
         {
-            for(int j = 0; j<i; j++) cout << ' ';
-            cout << "^\n";
-            for(int j = 0; j<i-8; j++) cout << ' ';
-            cerr << "Unexpected symbol\n\nError 3";//ошибка непредвиденного символа
-            return EXIT_FAILURE;
+            if(!file)
+            {
+                for(int j = 0; j<i; j++) cout << ' ';
+                cout << "^\n";
+            }
+            return mistake(3);//ошибка неопознанный символ
         }
-
     }
     nums.push(n);
 
@@ -149,6 +161,8 @@ int calculate_forward(bool file)//основная функция, считаю�
     cout << ans << "\n";
     return EXIT_SUCCESS;
 }
+
+
 
 
 
@@ -210,6 +224,15 @@ int calculate_reverse(bool file)
             string n2 = nums.top();
             nums.pop();
             nums.push(to_string(func(n1, n2, s[i])));
+        }
+        else if(s[i] != ' ' )//неопознанный символ
+        {
+            if(!file)
+            {
+                for(int j = 0; j<i; j++) cout << ' ';
+                cout << "^\n";
+            }
+            return mistake(3);//ошибка неопознанный символ
         }
     }
     if(nums.size() != 1) return mistake(7);//ошибка типа 3 3 3 3+
