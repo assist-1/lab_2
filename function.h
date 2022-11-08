@@ -21,4 +21,12 @@ int Check (int*, int);
 
 int Checkrev (int*, int);
 
+int Resultfor (int*, int*, int);
+
+int Resultrev (int*, int*, int);
+
+int EnterCheck (int);
+
+int EnterExp (char**);
+
 #endif //LABA_FUNCTION_H
