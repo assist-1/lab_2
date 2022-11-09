@@ -1,14 +1,30 @@
+#include <cstring>
+#include <fstream>
 #include <iostream>
 
 int main(int argc, char **argv) {
+    bool forward = false;
+    bool file = false;
+    char *file_name = nullptr;
+    bool reverse = false;
+
     if (argc == 1) {
-        std::cerr << "Nothing was read\n";
+        std::cerr << "No arguments\n";
         return EXIT_FAILURE;
-    } else {
-        std::cout << "You entered " << argc - 1 << " arguments\n";
-        for (std::size_t i = 1; i < argc; ++i) {
-            std::cout << argv[i] << std::endl;
+    }
+    for (std::size_t i = 1; i < argc; ++i) {
+        if (std::strcmp(argv[i], "--forward") == 0) {
+            forward = true;
+        } else if (std::strcmp(argv[i], "--file") == 0) {
+            file = true;
+            ++i;
+            file_name = argv[i];
+        } else if (std::strcmp(argv[i], "--reverse") == 0) {
+            reverse = true;
         }
+    }
+    if (file) {
+        std::ifstream ifs(file_name);
     }
     return EXIT_SUCCESS;
 }
