@@ -1,8 +1,6 @@
 PROJECT = main
 CC = g++
 
-all: main
-
 $(PROJECT): main.o functions.o
 	$(CC) main.o functions.o -o $(PROJECT)
 
