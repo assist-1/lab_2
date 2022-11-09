@@ -11,27 +11,28 @@ int main(int argc, char **argv) {
     if (strcmp(argv[1], "--forward") == 0) {
         if (argc == 4 && strcmp(argv[2], "--file") == 0) {
             answer = FileForwardCalculate(argv[3]);
-        }
-        else if (argc > 4) {
-            std::cerr << "Incorrect input" << std::endl;
+        } else if (argc > 4) {
+            std::cerr << "Incorrect enter" << std::endl;
+            return EXIT_FAILURE;
+        } else if (argc == 2) {
+            answer = ConsoleForwardCalculate();
+        } else {
+            std::cerr << "Incorrect enter" << std::endl;
             return EXIT_FAILURE;
         }
-        else {
-            answer = ConsoleForwardCalculate();
-        }
-    }  else if (strcmp(argv[1], "--reverse") == 0) {
+    } else if (strcmp(argv[1], "--reverse") == 0) {
         if (argc > 3 && strcmp(argv[2], "--file") == 0) {
             answer = FileReverseCalculate(argv[3]);
-        }
-        else if (argc > 4) {
+        } else if (argc > 4) {
             std::cerr << "Incorrect input" << std::endl;
             return EXIT_FAILURE;
-        }
-        else {
+        } else if (argc == 2) {
             answer = ConsoleReverseCalculate();
+        } else {
+            std::cerr << "Incorrect enter" << std::endl;
+            return EXIT_FAILURE;
         }
-    }
-    else {
+    } else {
         std::cerr
                 << "Please follow the rules and specify the desired flag first: --forward or -- reverse! If you also have a file, you should write --file and its name."
                 << std::endl;
