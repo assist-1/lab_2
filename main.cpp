@@ -9,17 +9,25 @@ int main(int argc, char **argv) {
     }
     int answer;
     if (strcmp(argv[1], "--forward") == 0) {
-        if (argc > 3 && strcmp(argv[2], "--file") == 0) {
+        if (argc == 4 && strcmp(argv[2], "--file") == 0) {
             answer = FileForwardCalculate(argv[3]);
         }
-        else if (argc == 2) {
+        else if (argc > 4) {
+            std::cerr << "Incorrect input" << std::endl;
+            return EXIT_FAILURE;
+        }
+        else {
             answer = ConsoleForwardCalculate();
         }
-    } if (strcmp(argv[1], "--reverse") == 0) {
+    }  else if (strcmp(argv[1], "--reverse") == 0) {
         if (argc > 3 && strcmp(argv[2], "--file") == 0) {
             answer = FileReverseCalculate(argv[3]);
         }
-        if (argc == 2) {
+        else if (argc > 4) {
+            std::cerr << "Incorrect input" << std::endl;
+            return EXIT_FAILURE;
+        }
+        else {
             answer = ConsoleReverseCalculate();
         }
     }

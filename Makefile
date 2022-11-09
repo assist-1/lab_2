@@ -1,6 +1,7 @@
 PROJECT = main
 CC = g++
 
+
 $(PROJECT): main.o functions.o
 	$(CC) main.o functions.o -o $(PROJECT)
 
@@ -11,4 +12,4 @@ functions.o: functions.cpp
 	$(CC) -c functions.cpp -o functions.o
 
 clean:
-	rm -rf *.o $(PROJECT)
+	rm $(PROJECT) *.o

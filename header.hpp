@@ -7,7 +7,7 @@
 
 struct Symbol {
     char operation; // для чисел поставим "0"
-    int value;
+    int value; // для операций поствим 0
 };
 
 bool Calculate(Symbol *Operations, Symbol *Values, int &i, int &j);
