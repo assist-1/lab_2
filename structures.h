@@ -12,4 +12,8 @@ struct LinkedListNode {
     LinkedListNode *next = nullptr;
 };
 
+LinkedListNode *push(LinkedListNode *stack_top, Token value);
+
+LinkedListNode *pop(LinkedListNode *stack_top);
+
 #endif //LAB_2_STRUCTURES_H

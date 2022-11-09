@@ -2,6 +2,7 @@
 #include <fstream>
 #include <iostream>
 
+#include "calc.h"
 #include "structures.h"
 
 LinkedListNode *split(std::istream &in_s) { // разделяем поток ввода на токены, вернем указатель на список
@@ -65,6 +66,12 @@ int main(int argc, char **argv) {
         tokens = split(ifs);
     } else if (forward) {
         tokens = split(std::cin);
+    }
+
+    if (reverse) {
+        std::cout << calc_reverse(tokens) << std::endl;
+    } else {
+        std::cout << calc(tokens) << std::endl;
     }
 
     return EXIT_SUCCESS;
