@@ -6,6 +6,15 @@ float n[100000], num=0; char buf[20], op[100000]; int ni=0, oi=0, flag=0, eflag=
 
 #define ERR {std::cerr << "\nWrong math expression.\n"; return EXIT_FAILURE;}
 
+bool in (char *a, char b)
+{
+  for (int i=0; a[i]!='\0'; ++i)
+  {
+    if (a[i]==b) return true;
+  }
+  return false; 
+}
+
 int ToDig (char a)
 {
   return (int)(a-'0');
@@ -72,7 +81,7 @@ void FOpers(char a)
               op[oi++] = a;
               break;
     case '*': 
-    case '/': while (op[oi-1]=='*'&&op[oi-1]=='/')
+    case '/': while (op[oi-1]=='*'||op[oi-1]=='/')
               {
                 FOper();
               }
@@ -80,15 +89,6 @@ void FOpers(char a)
               break;
     default: break;
   }
-}
-
-bool in (char *a, char b)
-{
-  for (int i=0; a[i]!='\0'; ++i)
-  {
-    if (a[i]==b) return true;
-  }
-  return false; 
 }
 
 
@@ -113,9 +113,9 @@ int RevPolNot (bool nf)
     {
       if (flag==1) {flag=0; n[ni++]=num; num=0;}
       f >> buf;
-      for (int i=0; buf[i]!='\0'&&!eflag;++i)
+      for (int i=0; !(buf[i]=='\0'||eflag);++i)
       {
-        if (buf[i]==26) eflag=1;
+        if (buf[i]==26||buf[i]==10) eflag=1;
         else if (in("1234567890.",buf[i]))
         {
           ToNum(buf[i]);
@@ -137,9 +137,9 @@ int RevPolNot (bool nf)
     {
       if (flag==1) {flag=0; n[ni++]=num; num=0;}
       std::cin >> buf;
-      for (int i=0; buf[i]!='\0'&&!eflag;++i)
+      for (int i=0; !(buf[i]=='\0'||eflag);++i)
       {
-        if (buf[i]==26) eflag=1;
+        if (buf[i]==26||buf[i]==10) eflag=1;
         else if (in("1234567890.",buf[i]))
         {
           ToNum(buf[i]);
@@ -170,7 +170,7 @@ int ForNot (bool nf)
       f >> buf;
       for (int i=0; !(buf[i]=='\0'||eflag);++i)
       {
-        if (buf[i]==26) eflag=1;
+        if (buf[i]==26||buf[i]==10) eflag=1;
         else if (in("1234567890.",buf[i]))
         {
           ToNum(buf[i]);
@@ -197,7 +197,7 @@ int ForNot (bool nf)
       std::cin >> buf;
       for (int i=0; !(buf[i]=='\0'||eflag);++i)
       {
-        if (buf[i]==26) eflag=1;
+        if (buf[i]==26||buf[i]==10) eflag=1;
         else if (in("1234567890.",buf[i]))
         {
           ToNum(buf[i]);

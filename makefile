@@ -3,9 +3,9 @@ CFLAGS += -c
 RM = del -f
 OBJS = main.o solve.o
 
-.PHONY: all clean
-all: solve
-solve: $(OBJS)
+.PHONY: all clean distclean
+all: make
+make: $(OBJS)
 	$(CC) $(LDFLAGS) $(OBJS) -o solve
 main.o: main.cpp solve.h
 	$(CC) $(CFLAGS) main.cpp -o main.o
