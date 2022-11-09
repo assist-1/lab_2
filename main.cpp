@@ -2,16 +2,7 @@
 #include <fstream>
 #include <iostream>
 
-struct Token {
-    char operation = 0;
-    int number = 0;
-};
-
-struct LinkedListNode {
-    LinkedListNode *prev = nullptr;
-    Token data;
-    LinkedListNode *next = nullptr;
-};
+#include "structures.h"
 
 LinkedListNode *split(std::istream &in_s) { // разделяем поток ввода на токены, вернем указатель на список
     LinkedListNode *head = nullptr; // указатель на начало списка
