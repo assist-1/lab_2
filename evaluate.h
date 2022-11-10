@@ -1,0 +1,1 @@
+double Evaluate(string postf);
