@@ -1,6 +1,3 @@
-/*!
- * @file main.cpp
- * */
 #include <iostream>
 #include <cstring>
 
@@ -34,7 +31,7 @@ int main(int argc, char **argv)
     if(reverse == forward)
     {
         cerr << "'I have the power to save the one you love. You must chOoOooOooOOoOse...'\
-        \nMake a choice between --forward and --reverse\n";
+        \nChoose a flag between --forward and --reverse\n";
         return EXIT_FAILURE;
     }
     

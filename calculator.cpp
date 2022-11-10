@@ -1,6 +1,3 @@
-/**
- * @file calculator.cpp
- * */
 #include <fstream>
 #include <iostream>
 #include <stack>
@@ -10,19 +7,14 @@ using namespace std;
 // #define DEBUG
 
 
-int level(char s)
+int level(char s)//приоритетность математических операций
 {
     if (s == '+' || s == '-') return 1;
     return 0;
 }
 
-/*!
- * \brief Проверка наличия символа в строке
- * \param s Строка
- * \param symbol Символ
- * \return Усли найден, False в обратном случае.
- * */
-bool in(string s, char symbol)//проверяет наличие символа в строке
+
+bool in(string s, char symbol)//проверка на наличие символа в строке
 { 
     bool fl = false;
     for(int i = 0; i < s.size(); i++)
@@ -31,7 +23,6 @@ bool in(string s, char symbol)//проверяет наличие символа
     }
     return false;
 }
-
 
 
 
@@ -51,7 +42,7 @@ float func(string n1, string n2, char func)//два числа фигачит
 
 int mistake(int num)//сообщение об ошибке
 {
-    cout << "\nOoops, you made a mistake.\n\nError " + to_string(num) + "\n";
+    cout << "Ooops, something is wrong.\nError " + to_string(num) + "\n";
     return EXIT_FAILURE;
 }
 
@@ -66,36 +57,29 @@ int calculate_forward(bool file)//основная функция, считаю�
     string s;//строка, с которой работаем
     if(file)
     {
-        try
-        {
-            ifstream input("input.txt");
-            if(input.is_open()) getline(input, s);
-            input.close();
-        }
-        catch(...)
-        {
-            return mistake(4);
-        }
+       ifstream file;
+       file.open("input.txt");
+       if(!file) return mistake(4);
     }
     else
     {
         getline(cin, s);      
     }
 
-    stack <string> nums;
-    stack <char> funcs;  
+    stack <string> nums;//стек с числами
+    stack <char> funcs;//стек с математическими операциями
 
     string n;//число, которое будет собираться
-    bool flag_empty = true;
+    bool flag_empty = true;//флаг для первой функции
     for (int i = 0; i < s.size(); i++)
     {
         if(in("+-*/", s[i]))
         {
             if(n=="") return(mistake(1));//ошибка, если две функции идут следом, то есть ++
 
-            if(flag_empty)//для первой функции
+            if(flag_empty)//без этого флага в стеке чисел будет только одно число, а обычно считаются два крайних числа из стека
             {   
-                funcs.push(s[i]);
+                funcs.push(s[i]);//поэтому просто кидаем знак в стек с операциями
                 flag_empty = false;
                 nums.push(n);
                 n = "";
@@ -104,7 +88,7 @@ int calculate_forward(bool file)//основная функция, считаю�
             {  
                 nums.push(n);//кладем число в стек
                 n = "";//сбрасмываем его
-                if (level(funcs.top()) <= level(s[i]))//если одинаковая приоритетность, то два крайних числа нужно считать
+                if (level(funcs.top()) <= level(s[i]))//если приоритетность не больше, то два крайних числа нужно считать
                 {
                     string n1 = nums.top();//берем последнее число
                     nums.pop();
@@ -119,19 +103,17 @@ int calculate_forward(bool file)//основная функция, считаю�
 
         else if(in("0123456789.", s[i]))
         {   
-            if(s[i] == '.' && n =="") return(mistake(2));//ошибка, число начинается с точки
+            if(s[i] == '.' && n =="") return mistake(2);//ошибка, число начинается с точки
+            if(s[i-1] == ' ' && n!= "") return mistake(9);//ошибка, между числами нет знака
             n += s[i];
         }
         else if(s[i] != ' ' )//неопознанный символ
         {
-            if(!file)
-            {
-                for(int j = 0; j<i; j++) cout << ' ';
-                cout << "^\n";
-            }
-            return mistake(3);//ошибка неопознанный символ
+            return mistake(3);//ошибка, неопознанный символ
         }
     }
+
+    if(n=="") return mistake(8);//ошибка, математическое выражение заканчивается знаком
     nums.push(n);
 
     for(int i = nums.size(); i>1; i--)
@@ -173,16 +155,9 @@ int calculate_reverse(bool file)
     string s;//строка, с которой работаем
     if(file)
     {
-        try
-        {
-            ifstream input("input.txt");
-            if(input.is_open()) getline(input, s);
-            input.close();
-        }
-        catch(...)
-        {
-            return mistake(4);//ошибка отсутствие файла input.txt
-        }
+       ifstream file;
+       file.open("input.txt");
+       if(!file) return mistake(4);
     }
     else
     {
@@ -190,13 +165,12 @@ int calculate_reverse(bool file)
     }
 
     stack <string> nums;//стек с числами
-    string n;
+    string n;//число, которое будет собираться
     for(int i = 0; i < s.size(); i++)
     {
         if(in("0123456789.", s[i]))
         {
-            if(s[i] == '.' && n =="") return mistake(2);
-            if (i == s.size()-1) return mistake(6);//ошибка типа 1 2+ 4
+            if(s[i] == '.' && n =="") return mistake(2);//ошибка, число начинается с точки
             n += s[i];
         }
 
@@ -211,13 +185,13 @@ int calculate_reverse(bool file)
 
         else if(in("+-/*", s[i]))
         {
-            if(n!="")//если две функции подряд
+            if(n!="")//если не две операции подряд
             {
                 nums.push(n);
                 n="";
             }
 
-            if(nums.size() < 2) return mistake(5);//ошибка типа 3+ одно число 
+            if(nums.size() < 2) return mistake(5);//ошибка, чисел меньше; 3+
 
             string n1 = nums.top();
             nums.pop();
@@ -227,15 +201,12 @@ int calculate_reverse(bool file)
         }
         else if(s[i] != ' ' )//неопознанный символ
         {
-            if(!file)
-            {
-                for(int j = 0; j<i; j++) cout << ' ';
-                cout << "^\n";
-            }
-            return mistake(3);//ошибка неопознанный символ
+            return mistake(3);//ошибка, неопознанный символ
         }
     }
-    if(nums.size() != 1) return mistake(7);//ошибка типа 3 3 3 3+
+    if(n!="") return mistake(6);//ошибка, выражение заканчивается числом
+    if(nums.size() != 1) return mistake(7);//ошибка, при опн в стеке всегда будет максимум два числа, а после ласт операции одно 
+    if(nums.size()==0) return mistake(8);
     cout << nums.top() << "\n";
     return EXIT_SUCCESS;
 }
