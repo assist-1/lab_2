@@ -14,3 +14,13 @@ int IsOperation(char sybmol) {
 		return 1;
 	return 0;
 }
+
+double Calculate(double x, char operation, double y) {
+	switch(operation) {
+		case '+': return x + y;
+		case '-': return x - y;
+		case '*': return x * y;
+		case '/': return x / y;
+		default:  return 0;
+	}
+}
