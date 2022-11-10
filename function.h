@@ -1,14 +1,16 @@
 #ifndef CALCULATOR_FUNCTION_H
 #define CALCULATOR_FUNCTION_H
-
+#include <iostream>
 extern int flag;
 extern int countVal;
 extern int countSign;
 extern int countHooks1;
 extern int countHooks2;
+extern int currentCountHooks1;
 extern double val[200];
 extern char Sign[200];
 extern char str1[200];
+extern char str2[200];
 extern int hooks[200];
 int PrSigns(char b);
 bool Pr(char ar[200], int value);
