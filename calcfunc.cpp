@@ -9,7 +9,7 @@ int IsDigit(char symbol) {
 		return 1;
 	return 0;
 
-int IsOperation(char sybmol) {
+int IsOperation(char symbol) {
 	if(symbol == '+' || symbol == '-' || symbol == '*' || symbol == '/')
 		return 1;
 	return 0;
@@ -27,13 +27,13 @@ double Calculate(double x, char operation, double y) {
 
 void InfNotation() {
 	char stream[STREAM_SIZE];
-	int numbers[NUMBERS_SIZE];
+	int  numbers[NUMBERS_SIZE];
 	char operations[OPERATIONS_SIZE];
-	int token_quantity   = 0;
-	int index_stream     = 0;
-	int index_numbers    = 0;
-	int index_operations = 0;
-	int number1, number2;
+	int  token_quantity   = 0;
+	int  index_stream     = 0;
+	int  index_numbers    = 0;
+	int  index_operations = 0;
+	int  number1, number2;
 	std::cin >> stream;
 	char token = stream[0];
 	for(int i = 0; i < STREAM_SIZE; i++) { // считаем кол-во токенов
@@ -46,7 +46,13 @@ void InfNotation() {
 	while(token = stream[index_stream++]) {
 		if(IsDigit(token)) {
 			number1 = token - '0';
-			while()
+			while(IsDigit(stream[index_stream++])) {
+				number1 = number1 * 10 + (token - '0');
+			}
+			numbers[index_numbers++] = number1;
+		}
+		else if(IsOperation(token)) {
+			operations[index_operations++] = token;
 		}
 	}
 
