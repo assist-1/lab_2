@@ -24,3 +24,35 @@ double Calculate(double x, char operation, double y) {
 		default:  return 0;
 	}
 }
+
+void InfNotation() {
+	char stream[STREAM_SIZE];
+	int numbers[NUMBERS_SIZE];
+	char operations[OPERATIONS_SIZE];
+	int token_quantity   = 0;
+	int index_stream     = 0;
+	int index_numbers    = 0;
+	int index_operations = 0;
+	int number1, number2;
+	std::cin >> stream;
+	char token = stream[0];
+	for(int i = 0; i < STREAM_SIZE; i++) { // считаем кол-во токенов
+		if(stream[i] != '\0')              //
+			token_quantity++;              //
+		else                               //
+			break;                         //
+	}                                      //
+
+	while(token = stream[index_stream++]) {
+		if(IsDigit(token)) {
+			number1 = token - '0';
+			while()
+		}
+	}
+
+
+
+
+
+
+}
