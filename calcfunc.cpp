@@ -8,3 +8,9 @@ int IsDigit(char symbol) {
 	if(symbol >= '0' && symbol <= '9')
 		return 1;
 	return 0;
+
+int IsOperation(char sybmol) {
+	if(symbol == '+' || symbol == '-' || symbol == '*' || symbol == '/')
+		return 1;
+	return 0;
+}
