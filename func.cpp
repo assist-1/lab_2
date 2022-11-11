@@ -4,6 +4,7 @@
 using std::cout;
 using std::endl;
 using std::cin;
+using std::fstream;
 const int LENSTR = 5555;
 char exp[LENSTR];
 void ReadFromCin(){
@@ -12,7 +13,7 @@ void ReadFromCin(){
     exp[s] = '\0';
 }
 void ReadFromFile(char *name){
-    std::fstream file;
+    fstream file;
     char sym;
     int i = 0;
     while (file >> sym){
