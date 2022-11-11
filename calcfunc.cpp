@@ -15,6 +15,16 @@ int IsOperation(char symbol) {
 	return 0;
 }
 
+int GetPriority(char operation) {
+	switch(operation) {
+		case '*': return 2;
+		case '/': return 2;
+		case '+': return 1;
+		case '-': return 1;
+		default:  return 0;
+	}
+}
+
 double Calculate(double x, char operation, double y) {
 	switch(operation) {
 		case '+': return x + y;
@@ -34,26 +44,29 @@ void InfNotation() {
 	int  index_numbers    = 0;
 	int  index_operations = 0;
 	int  number1, number2;
+	
 	std::cin >> stream;
+
 	char token = stream[0];
-	for(int i = 0; i < STREAM_SIZE; i++) { // считаем кол-во токенов
+	for(int i = 0; i < STREAM_SIZE; i++) { // 
 		if(stream[i] != '\0')              //
-			token_quantity++;              //
+			token_quantity++;              // считаем кол-во токенов
 		else                               //
 			break;                         //
 	}                                      //
 
-	while(token = stream[index_stream++]) {
-		if(IsDigit(token)) {
-			number1 = token - '0';
-			while(IsDigit(stream[index_stream++])) {
-				number1 = number1 * 10 + (token - '0');
+	while(token = stream[index_stream++]) { // считываем токен с потока
+		if(IsDigit(token)) {        // если токен - цифра,
+			number1 = token - '0';  // то берем ее как число
+			while(IsDigit(stream[index_stream++])) {     // проверям, есть ли дальше цифры,
+				number1 = number1 * 10 + (token - '0');  // если есть, значит число двух и более значное, добавляем следующую цифру в свой разряд
 			}
-			numbers[index_numbers++] = number1;
+			numbers[index_numbers++] = number1; // получившееся число помещаем в "стек" чисел
 		}
-		else if(IsOperation(token)) {
-			operations[index_operations++] = token;
+		else if(IsOperation(token)) {                // если токен - операция,
+			operations[index_operations++] = token;  // то помещаем в "стек" операций
 		}
+
 	}
 
 
