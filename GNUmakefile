@@ -1,6 +1,6 @@
 OBJS=func.o main.o
 
-prog: $(OBJS)
+result: $(OBJS)
   g++ -o result $(OBJS)
 
 .PHONY: clean
@@ -8,4 +8,4 @@ clean:
   $(RM) $(OBJS)
 
 distclean: clean
-  $(RM) prog
+  $(RM) result
