@@ -15,9 +15,9 @@ void Options() {
     cout << endl;
     cout << "USAGE: ./prog [ (--forward, --reverse)> --file <namefile>  ]\n";
     std::cout << "\n------------------------------------Flags -----------------------------------\n\n";
-    cout << "--forward  ------>  Enter in common form" << endl;
-    cout << "--reverse  ------>  Enter in Pollish form" << endl;
-    cout << "--file     ------>  Enter form file";
+    cout << "--forward  -------  Enter in common form" << endl;
+    cout << "--reverse  -------  Enter in Pollish form" << endl;
+    cout << "--file     -------  Enter form file";
     cout << "\n\n";
 }
 void ReadFromCin(){
@@ -152,4 +152,5 @@ int Reverse(){
         c1 = Calculation(c1,c2,operation);
     }
     cout << "The result is " << c1 << endl;
+    return 0;
 }

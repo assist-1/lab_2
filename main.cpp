@@ -5,7 +5,7 @@
 using std::cout;
 using std::endl;
 using std::cerr;
-const char flag[3] = {"--forward", "--reverse","--file"};
+const char* flag[3] = {"--forward", "--reverse","--file"};
 int main(int argc,char **argv){
     if (argc == 1){
         cerr << "Error: you don't enter flag" << endl;
