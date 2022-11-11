@@ -6,6 +6,7 @@ using std::cerr;
 int main(int argc,char **argv){
     if (argc == 1){
         cerr << "Error: you don't enter flag" << endl;
+        Options();
     }
     else if (argc == 2){
         if (argv[1] == "--forward") {
@@ -19,6 +20,7 @@ int main(int argc,char **argv){
             Reverse();
         }
         else cerr << "You entered wrong flag" << endl;
+        Options();
     }
     else if (argc == 4){
         if (argv[2] == "--file") {
@@ -35,9 +37,11 @@ int main(int argc,char **argv){
         }
         else {
             cerr << "Wrong flags" << endl;
+            Options();
         }
     }
     else {
         cerr << "Wrong flags" << endl;
+        Options();
     }
 }

@@ -7,6 +7,16 @@ using std::cin;
 using std::fstream;
 const int LENSTR = 5555;
 char exp[LENSTR];
+void Options() {
+    cout << endl;
+    cout << "USAGE: ./prog [ --forward ] [ --reverse ]";
+    cout << "              [ (--forward, --reverse)> --file <file_name> <form= ]\n";
+    std::cout << "\n------------------------------------Flags -----------------------------------\n\n";
+    cout << "--forward  ------>  Enter in common form" << endl;
+    cout << "--reverse  ------>  Enter in Pollish form" << endl;
+    cout << "--file     ------>  Enter form file";
+    cout << "\n\n";
+}
 void ReadFromCin(){
     cin.read(exp,LENSTR-1);
     int s = cin.gcount();
