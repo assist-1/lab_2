@@ -17,12 +17,12 @@ int main(int argc, char ** argv) {
 	else if(argc == 2) {
 		if(!(strcmp(argv[1], flags[0]))) {
 			cout << "Please enter your task in Infix Notation:" << endl;
-			ReadFromConsole();
+			ReadingFromConsole();
 			InfNotation();
 		}
 		else if(!(strcmp(argv[1], flags[1]))) {
 			cout << "Please enter your task in Polish Notation:" << endl;
-			ReadFromConsole();
+			ReadingFromConsole();
 			//PolNotation();
 		}
 		else if(!(strcmp(argv[1], flags[2])))
@@ -36,7 +36,7 @@ int main(int argc, char ** argv) {
 	else if(argc == 4) {
 		if(!(strcmp(argv[2], flags[3]))) {
 			char *namefile = argv[3];
-			if(ReadFromFile(namefile)) {
+			if(ReadingFromFile(namefile)) {
 				if(!(argv[1], flags[0])) {
 					InfNotation();
 				}

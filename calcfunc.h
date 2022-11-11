@@ -3,7 +3,7 @@
 
 void Help();
 void ReadingFromConsole();
-void ReadingFromFile();
+int ReadingFromFile(char *namefile);
 void InfNotation();
 
 #endif

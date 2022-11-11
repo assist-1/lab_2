@@ -71,15 +71,19 @@ void ReadingFromConsole() {
 	stream[token_quantity] = '\0';
 }
 
-void ReadingFromFile() {
-	std::fstream f;
-	char symbol;
-	int i = 0;
-	while(f >> symbol) {
-		stream[i] = symbol;
-		i++;
+int ReadingFromFile(char *namefile) {
+	std::ifstream f;
+	if(f.is_open()) {
+		char symbol;
+		int i = 0;
+		while(f >> symbol) {	
+			stream[i] = symbol;
+			i++;
+		}
+		f.close();
+		return 1;
 	}
-	f.close();
+	return 0;
 }
 
 
