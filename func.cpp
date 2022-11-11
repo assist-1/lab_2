@@ -9,8 +9,7 @@ const int LENSTR = 5555;
 char exp[LENSTR];
 void Options() {
     cout << endl;
-    cout << "USAGE: ./prog [ --forward ] [ --reverse ]";
-    cout << "              [ (--forward, --reverse)> --file <file_name> <form= ]\n";
+    cout << "USAGE: ./prog [ (--forward, --reverse)> --file <namefile>  ]\n";
     std::cout << "\n------------------------------------Flags -----------------------------------\n\n";
     cout << "--forward  ------>  Enter in common form" << endl;
     cout << "--reverse  ------>  Enter in Pollish form" << endl;
