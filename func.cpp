@@ -107,3 +107,32 @@ int Forward(){
     cout << "The result is " << ValStack[iVal] << endl;
     return 0;
 }
+int Reverse(){
+    int c1,c2;
+    char operation;
+    int iexp = 0;
+    c1 = exp[iexp] - '0';
+    iexp++;
+    while (IsDigit(exp[iexp])){
+        c1 = c1*10 + exp[iexp] - '0';
+        iexp++;
+    }
+    while (exp[iexp]){
+        if (!IsDigit(exp[iexp])){
+            iexp++;
+            continue;
+        }
+        b = exp[iexp] - '0';
+        iexp++;
+        while (IsDigit(exp[iexp])){
+            c2 = c2*10 + exp[iexp] - '0';
+        }
+        while (!IsOper(exp[iexp])){
+            iexp++;
+        }
+        operation = exp[iexp];
+        iexp++;
+        c1 = Calculation(c1,c2,operation);
+    }
+    cout << "The result is " << c1 << endl;
+}
