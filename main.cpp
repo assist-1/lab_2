@@ -23,16 +23,21 @@ int main(int argc,char **argv){
     else if (argc == 4){
         if (argv[2] == "--file") {
             char *namefile = argv[3];
-            }
-            if ReadFromFile(namefile){
+
+            if (ReadFromFile(namefile)){
                 if (argv[1] == "--forward"){
-                    cout << "Enter in common form" << endl;
                     Forward();
                 }
-                if (argv[2] == "--reverse"){
-                    cout << "Enter in Pollish form" << endl;
+                if (argv[1] == "--reverse"){
                     Reverse();
                 }
             }
+        }
+        else {
+            cerr << "Wrong flags" << endl;
+        }
+    }
+    else {
+        cerr << "Wrong flags" << endl;
     }
 }
