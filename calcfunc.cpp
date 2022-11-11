@@ -1,18 +1,29 @@
 #include <iostream>
+#include <fstream>
+const int STREAM_SIZE     = 256; // размер стека элементов потока
+const int NUMBERS_SIZE    = 256; // размер стека с числами
+const int OPERATIONS_SIZE = 256; // размер стека с операциями
 
-int STREAM_SIZE     = 256; // размер стека элементов потока
-int NUMBERS_SIZE    = 256; // размер стека с числами
-int OPERATIONS_SIZE = 256; // размер стека с операциями
-
-char stream[STREAM_SIZE];
+char   stream[STREAM_SIZE];
+double numbers[NUMBERS_SIZE];
+char   operations[OPERATIONS_SIZE];
+int    index_stream     = 0;
+int    index_numbers    = 0;
+int    index_operations = 0;
+int    number1, number2;
+char   token;
+char   operation;
 
 void Help() {
-	std::cout << "-----------------------------------INSTRUCTION------------------------------" << std::endl;
+	std::cout << "\n";
+	std::cout << "################################_INSTRUCTION_###############################" << std::endl;
 	std::cout << "You need to enter: ./'prog_name' [1] [2] [3]"                                 << std::endl;
+	std::cout << "----------------------------------------------------------------------------" << std::endl;
 	std::cout << "[1] flags about notation (necessarily): '--forward' '--reverse' "             << std::endl;
 	std::cout << "[2] flag about reading (not necessarily): '--file' (from console by default)" << std::endl;
 	std::cout << "[3] file name (if entered --file)"                                            << std::endl;
 	std::cout << "----------------------------------------------------------------------------" << std::endl;
+	std::cout << "############################################################################" << std::endl;
 	std::cout << "\n\n";
 }
 
@@ -61,35 +72,18 @@ void ReadingFromConsole() {
 }
 
 void ReadingFromFile() {
-	std::fstream file;
+	std::fstream f;
 	char symbol;
 	int i = 0;
-	while(file >> symbol) {
+	while(f >> symbol) {
 		stream[i] = symbol;
 		i++;
 	}
-	file.close();
+	f.close();
 }
 
 
-double InfNotation() {
-	double numbers[NUMBERS_SIZE];
-	char   operations[OPERATIONS_SIZE];
-	int    index_stream     = 0;
-	int    index_numbers    = 0;
-	int    index_operations = 0;
-	int    number1, number2;
-	
-	std::cin >> stream;
-
-	char token = stream[0];
-	for(int i = 0; i < STREAM_SIZE; i++) { // 
-		if(stream[i] != '\0')              //
-			token_quantity++;              // считаем кол-во токенов
-		else                               //
-			break;                         //
-	}                                      //
-
+void InfNotation() {
 	while(token = stream[index_stream++]) { // считываем токен с потока
 		if(IsDigit(token)) {        // если токен - цифра,
 			number1 = token - '0';  // то берем ее как число
@@ -130,10 +124,10 @@ double InfNotation() {
 		}
 		index_numbers--;
 		
-		return numbers[index_numbers];
+		std::cout << "Result: " << numbers[index_numbers] << std::endl;
 	}
 }
 
-double PolNotation() {
+void PolNotation() {
 	
 }

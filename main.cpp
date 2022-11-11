@@ -1,42 +1,60 @@
 #include <iostream>
-
+#include <stdlib.h>
+#include <cstring>
+#include "calcfunc.h"
 using std::cout;
-using std::endl;																	// ./a.out   --flag --file name
-using std::cerr;																		  0          1     2     3
+using std::endl;
+using std::cerr;
 
 int main(int argc, char ** argv) {
+	const char * flags[4] = {"--forward", "--reverse", "--help", "--file"};
+
 	if(argc == 1) {
 		cerr << "Error: flag not found" << endl;
+		Help();
+		exit(1);
 	}
 	else if(argc == 2) {
-		if(argv[1] == "--forward") {
+		if(!(strcmp(argv[1], flags[0]))) {
 			cout << "Please enter your task in Infix Notation:" << endl;
 			ReadFromConsole();
 			InfNotation();
 		}
-		else if(argv[1] == "--reverse") {
+		else if(!(strcmp(argv[1], flags[1]))) {
 			cout << "Please enter your task in Polish Notation:" << endl;
 			ReadFromConsole();
-			//PolishNotation();
+			//PolNotation();
 		}
-		else
-			cout << "Error: flag entered incorrectly" << endl;
+		else if(!(strcmp(argv[1], flags[2])))
+			Help();
+		else {
+			cerr << "Error: flag entered incorrectly" << endl;
+			Help();
+			exit(1);
+		}
 	}
 	else if(argc == 4) {
-		if(argv[2] == "--file") {
+		if(!(strcmp(argv[2], flags[3]))) {
 			char *namefile = argv[3];
 			if(ReadFromFile(namefile)) {
-				if(argv[1] == "--forward") {
+				if(!(argv[1], flags[0])) {
 					InfNotation();
 				}
-				else if(argv[1] == "--reverse") {
+				else if(!(strcmp(argv[1], flags[1]))) {
 					//PolNotation();
 				}
 			}
 		}
-		else
+		else {
 			cerr << "Error: flag entered incorrectly" << endl;
+			Help();
+			exit(1);
+		}
 	}
-	else
+	else {
 		cerr << "Error: flag entered incorrectly" << endl;
+		Help();
+		exit(1);
+	}
+
 }
