@@ -5,8 +5,12 @@ using std::cout;
 using std::endl;
 using std::cin;
 using std::fstream;
-const int LENSTR = 5555;
+const int LENSTR = 555;
 char exp[LENSTR];
+char SymStack[500]; // стек символов
+int ValStack[500];  // стек значений
+int iVal = 0, iSym = 0;   // счётчик в стеке
+int iexp = 0; // счетчик массива входного потока
 void Options() {
     cout << endl;
     cout << "USAGE: ./prog [ (--forward, --reverse)> --file <namefile>  ]\n";
@@ -21,15 +25,20 @@ void ReadFromCin(){
     int s = cin.gcount();
     exp[s] = '\0';
 }
-void ReadFromFile(char *name){
+int ReadFromFile(char *name){
     fstream file;
     char sym;
     int i = 0;
-    while (file >> sym){
-        exp[i] = sym;
-        i++;
+    if (file.is_open()){
+        while (file >> sym){
+            exp[i] = sym;
+            i++;
     }
-    file.close();
+        file.close();
+        return 0;
+    }
+    return 1;
+
 }
 int IsDigit(char c){
     if (c >= '0' && c<='9') return 1;
@@ -40,8 +49,8 @@ int IsOper(char c){
     else return 0;
 }
 int CheckPriority(char c1, char c2){
-    if ((c2 == '*' || c2 == '/') && ((c1 == '+') || (c1 == '-') || (c1 == '*') || (c1 == '/')) return 1;
-    if ((c2 == '+' || c2 == '-')) && ((c1 == '+') || (c1 == '-')) return 1;
+    if ((c2 == '*' || c2 == '/') && ((c1 == '+') || (c1 == '-') || (c1 == '*') || (c1 == '/'))) return 1;
+    if (((c2 == '+' || c2 == '-')) && ((c1 == '+') || (c1 == '-'))) return 1;
     else return -1;
 }
 int Calculation(int c1, int c2,char operation){
@@ -54,24 +63,22 @@ int Calculation(int c1, int c2,char operation){
 int Forward(){
     int c1, c2;    //промежуточные переменные
     char operation;  //
-    char SymStack[500]; // стек символов
-    int ValStack[500];  // стек значений
     int iVal = 0, iSym = 0;   // счётчик в стеке
     int iexp = 0; // счетчик массива входного потока
     char token = exp[0];   // текущий элемент
     while (token = exp[iexp]){    //пока существует токен
         iexp++;
-        if (isDigit(token)){  //если токен - цифра, то записываем символ и учитываем случай,
+        if (IsDigit(token)){  //если токен - цифра, то записываем символ и учитываем случай,
             c1 = token - '0'; //  когда итоговое значение более 1 знака
 
-            while (isDigit(exp[iexp])){
+            while (IsDigit(exp[iexp])){
                 iexp++;
                 c1 = 10*c1 + token - '0';
         }
             ValStack[iVal] = c1;  //итоговое значение записываем в стэк
             iVal++;
         }
-        if (isOper(token)){  // если токен - это операция, то мы,
+        if (IsOper(token)){  // если токен - это операция, то мы,
             while (iSym !=0 && CheckPriority(token,SymStack[iSym - 1])){ //при условии меньшего приоритета по отношению к последней
                     iSym--;   // выполняем операцию, которая была в стеке с двумя предыдущими числами
                     operation = SymStack[iSym];
@@ -132,7 +139,7 @@ int Reverse(){
             iexp++;
             continue;
         }
-        b = exp[iexp] - '0';
+        c2 = exp[iexp] - '0';
         iexp++;
         while (IsDigit(exp[iexp])){
             c2 = c2*10 + exp[iexp] - '0';
