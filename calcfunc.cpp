@@ -1,13 +1,16 @@
 #include <iostream>
 
-int STREAM_SIZE     = 256;
-int NUMBERS_SIZE    = 256;
-int OPERATIONS_SIZE = 256;
+int STREAM_SIZE     = 256; // размер стека элементов потока
+int NUMBERS_SIZE    = 256; // размер стека с числами
+int OPERATIONS_SIZE = 256; // размер стека с операциями
+
+char stream[STREAM_SIZE];
 
 int IsDigit(char symbol) {
 	if(symbol >= '0' && symbol <= '9')
 		return 1;
 	return 0;
+}
 
 int IsOperation(char symbol) {
 	if(symbol == '+' || symbol == '-' || symbol == '*' || symbol == '/')
@@ -35,15 +38,36 @@ double Calculate(double x, char operation, double y) {
 	}
 }
 
-void InfNotation() {
-	char stream[STREAM_SIZE];
-	int  numbers[NUMBERS_SIZE];
-	char operations[OPERATIONS_SIZE];
-	int  token_quantity   = 0;
-	int  index_stream     = 0;
-	int  index_numbers    = 0;
-	int  index_operations = 0;
-	int  number1, number2;
+void ReadingFromConsole() {
+	std::cin >> stream;
+	int token_quantity = 0;
+	for(int i = 0; i < STREAM_SIZE; i++) {
+		if(stream[i] != '\0')
+			token_quantity++;
+		else
+			break;
+	}
+	stream[token_quantity] = '\0';
+}
+
+void ReadingFromFile() {
+	std::fstream file;
+	char symbol;
+	int i = 0;
+	while(file >> symbol) {
+		stream[i] = symbol;
+		i++;
+	}
+	file.close();
+}
+
+double InfNotation() {
+	double numbers[NUMBERS_SIZE];
+	char   operations[OPERATIONS_SIZE];
+	int    index_stream     = 0;
+	int    index_numbers    = 0;
+	int    index_operations = 0;
+	int    number1, number2;
 	
 	std::cin >> stream;
 
@@ -63,15 +87,42 @@ void InfNotation() {
 			}
 			numbers[index_numbers++] = number1; // получившееся число помещаем в "стек" чисел
 		}
-		else if(IsOperation(token)) {                // если токен - операция,
-			operations[index_operations++] = token;  // то помещаем в "стек" операций
+
+		else if(IsOperation(token)) {
+			while(index_operations != 0 && GetPriority(token) <= GetPriority(operations[index_operations--])) {
+				operation = operations[index_operations];
+				number1 = numbers[index_numbers--];
+				number2 = numbers[index_numbers];
+				numbers[index_numbers++] = Calculate(number1, operation, number2);
+			}
+			operations[index_operations++] = token;
+		}
+		
+		else if(token == '(')
+			operations[index_operations++] = token;
+		
+		else if(token == ')') {
+			while(operations[index_operations - 1] != '(') {
+				operation = operations[--index_operations];
+				number1 = numbers[--index_numbers];
+				number2 = numbers[--index_numbers];
+				numbers[index_numbers++] = Calculate(number1, operation, number2);
+			}
+			index_operations--;
 		}
 
+		while(index_operations != 0) {
+			operation = operations[--index_operations];
+			number1 = numbers[--index_numbers];
+			number2 = numbers[--index_numbers];
+			numbers[index_numbers++] = Calculate(number1, operation, number2);
+		}
+		index_numbers--;
+		
+		return numbers[index_numbers];
 	}
+}
 
-
-
-
-
+double PolNotation() {
 
 }
