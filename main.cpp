@@ -12,7 +12,7 @@ int main(int argc,char **argv){
         Options();
     }
     else if (argc == 2){
-        if (!strcmp(argv[1],flag[0])) {
+        if (!(strcmp(argv[1],flag[0]))) {
             cout << "Enter in common form" << endl;
             ReadFromCin();
             Forward();

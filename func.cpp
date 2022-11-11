@@ -5,7 +5,7 @@ using std::cout;
 using std::endl;
 using std::cin;
 using std::fstream;
-const int LENSTR = 555;
+const int LENSTR = 200;
 char exp[LENSTR];
 char SymStack[500]; // стек символов
 int ValStack[500];  // стек значений
@@ -42,25 +42,28 @@ int ReadFromFile(char *name){
 }
 int IsDigit(char c){
     if (c >= '0' && c<='9') return 1;
-    else return 0;
+    return 0;
 }
 int IsOper(char c){
     if (c == '*' || c == '/' || c == '+' || c=='-') return 1;
-    else return 0;
+    return 0;
 }
 int CheckPriority(char c1, char c2){
-    if ((c2 == '*' || c2 == '/') && ((c1 == '+') || (c1 == '-') || (c1 == '*') || (c1 == '/'))) return 1;
-    if (((c2 == '+' || c2 == '-')) && ((c1 == '+') || (c1 == '-'))) return 1;
-    else return -1;
+    if ((c2 == '*' || c2 == '/') && (c1 == '+' || c1 == '-')) return 1;
+    else if ((c2 == '*' || c2 == '/') && (c1 == '*' || c1 == '/')) return 1;
+    else if ((c2 == '+' || c2 == '-') && (c1 == '+' || c1 == '-')) return 1;
+    else return 0;
 }
 int Calculation(int c1, int c2,char operation){
     if (operation == '*') return c1*c2;
     if (operation == '-') return c1-c2;
     if (operation == '+') return c1+c2;
     if (operation == '/') return c1/c2;
-    else return 0;
+    else return -1;
 }
 int Forward(){
+    char SymStack[500]; // стек символов
+    int ValStack[500];  // стек значений
     int c1, c2;    //промежуточные переменные
     char operation;  //
     int iVal = 0, iSym = 0;   // счётчик в стеке
@@ -72,13 +75,14 @@ int Forward(){
             c1 = token - '0'; //  когда итоговое значение более 1 знака
 
             while (IsDigit(exp[iexp])){
+                token = exp[iexp];
                 iexp++;
                 c1 = 10*c1 + token - '0';
         }
             ValStack[iVal] = c1;  //итоговое значение записываем в стэк
             iVal++;
         }
-        if (IsOper(token)){  // если токен - это операция, то мы,
+        else if (IsOper(token)){  // если токен - это операция, то мы,
             while (iSym !=0 && CheckPriority(token,SymStack[iSym - 1])){ //при условии меньшего приоритета по отношению к последней
                     iSym--;   // выполняем операцию, которая была в стеке с двумя предыдущими числами
                     operation = SymStack[iSym];
@@ -86,17 +90,17 @@ int Forward(){
                     c1 = ValStack[iVal];
                     iVal--;
                     c2 = ValStack[iVal];
-                    ValStack[iVal] = Calculation(c1,c2,operation);
+                    ValStack[iVal] = Calculation(c2,c1,operation);
                     iVal++;
             }
             SymStack[iSym] = token;  // А иначе просто записываем токен в стек
             iSym++;
         }
-        if (token == '('){ //Если встретилась левая скобка, то записываем в стек
+        else if (token == '('){ //Если встретилась левая скобка, то записываем в стек
             SymStack[iSym] = token;
             iSym++;
         }
-        if (token == ')'){ //Если встретилась правая скобка
+        else if (token == ')'){ //Если встретилась правая скобка
             while(SymStack[iSym-1] !='('){ // И пока не было последним элементом левая скобка, то считаем выражение
                 iSym--;
                 operation = SymStack[iSym];
@@ -104,7 +108,7 @@ int Forward(){
                 c1 = ValStack[iVal];
                 iVal--;
                 c2 = ValStack[iVal];
-                ValStack[iVal] = Calculation(c1,c2,operation);
+                ValStack[iVal] = Calculation(c2,c1,operation);
                 iVal++;
             }
             iSym--;
@@ -117,11 +121,10 @@ int Forward(){
         c1 = ValStack[iVal];
         iVal--;
         c2 = ValStack[iVal];
-        ValStack[iVal] = Calculation(c1,c2,operation);
+        ValStack[iVal] = Calculation(c2,c1,operation);
         iVal++;
     }
-    iVal--;
-    cout << "The result is " << ValStack[iVal] << endl;
+    cout << "The result is " << ValStack[--iVal] << endl;
     return 0;
 }
 int Reverse(){
