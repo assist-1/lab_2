@@ -1,11 +1,11 @@
 OBJS=func.o main.o
 
 result: $(OBJS)
-  g++ -o result $(OBJS)
+	g++ -o result $(OBJS)
 
 .PHONY: clean
 clean:
-  $(RM) $(OBJS)
+	$(RM) $(OBJS)
 
 distclean: clean
-  $(RM) result
+	$(RM) result
