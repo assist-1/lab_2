@@ -25,7 +25,18 @@ int main(int argc, char ** argv) {
 	else if(argc == 4) {
 		if(argv[2] == "--file") {
 			char *namefile = argv[3];
+			if(ReadFromFile(namefile)) {
+				if(argv[1] == "--forward") {
+					InfNotation();
+				}
+				else if(argv[1] == "--reverse") {
+					//PolNotation();
+				}
+			}
 		}
-		if Read
+		else
+			cerr << "Error: flag entered incorrectly" << endl;
 	}
+	else
+		cerr << "Error: flag entered incorrectly" << endl;
 }

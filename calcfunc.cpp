@@ -6,6 +6,16 @@ int OPERATIONS_SIZE = 256; // размер стека с операциями
 
 char stream[STREAM_SIZE];
 
+void Help() {
+	std::cout << "-----------------------------------INSTRUCTION------------------------------" << std::endl;
+	std::cout << "You need to enter: ./'prog_name' [1] [2] [3]"                                 << std::endl;
+	std::cout << "[1] flags about notation (necessarily): '--forward' '--reverse' "             << std::endl;
+	std::cout << "[2] flag about reading (not necessarily): '--file' (from console by default)" << std::endl;
+	std::cout << "[3] file name (if entered --file)"                                            << std::endl;
+	std::cout << "----------------------------------------------------------------------------" << std::endl;
+	std::cout << "\n\n";
+}
+
 int IsDigit(char symbol) {
 	if(symbol >= '0' && symbol <= '9')
 		return 1;
@@ -60,6 +70,7 @@ void ReadingFromFile() {
 	}
 	file.close();
 }
+
 
 double InfNotation() {
 	double numbers[NUMBERS_SIZE];
