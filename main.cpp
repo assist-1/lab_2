@@ -1,5 +1,6 @@
 #include <iostream>
 #include <cstdio>
+#include <func.h>
 using std::cout;
 using std::endl;
 using std::cerr;
