@@ -10,7 +10,7 @@ int main(int argc, char ** argv) {
 	const char * flags[4] = {"--forward", "--reverse", "--help", "--file"};
 
 	if(argc == 1) {
-		cerr << "Error: flag not found" << endl;
+		cerr << "###_ERROR: flag not found_###" << endl;
 		Help();
 		exit(1);
 	}
@@ -28,7 +28,7 @@ int main(int argc, char ** argv) {
 		else if(!(strcmp(argv[1], flags[2])))
 			Help();
 		else {
-			cerr << "Error: flag entered incorrectly" << endl;
+			cerr << "###_ERROR: flag entered incorrectly_###" << endl;
 			Help();
 			exit(1);
 		}
@@ -46,15 +46,14 @@ int main(int argc, char ** argv) {
 			}
 		}
 		else {
-			cerr << "Error: flag entered incorrectly" << endl;
+			cerr << "###_ERROR: flag entered incorrectly_###" << endl;
 			Help();
 			exit(1);
 		}
 	}
 	else {
-		cerr << "Error: flag entered incorrectly" << endl;
+		cerr << "###_ERROR: flag entered incorrectly_###" << endl;
 		Help();
 		exit(1);
 	}
-
 }

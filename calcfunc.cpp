@@ -1,16 +1,18 @@
 #include <iostream>
 #include <fstream>
-const int STREAM_SIZE     = 256; // размер стека элементов потока
-const int NUMBERS_SIZE    = 256; // размер стека с числами
-const int OPERATIONS_SIZE = 256; // размер стека с операциями
+#include <cmath>
+
+const int STREAM_SIZE     = 256; // размер массива элементов потока
+const int NUMBERS_SIZE    = 256; // размер массива с числами
+const int OPERATIONS_SIZE = 256; // размер массива с операциями
 
 char   stream[STREAM_SIZE];
-int numbers[NUMBERS_SIZE];
+double numbers[NUMBERS_SIZE];
 char   operations[OPERATIONS_SIZE];
 int    index_stream     = 0;
 int    index_numbers    = 0;
 int    index_operations = 0;
-int    number1, number2;
+double number1, number2;
 char   token;
 char   operation;
 
@@ -27,12 +29,6 @@ void Help() {
 	std::cout << "\n\n";
 }
 
-int IsSpace(char symbol) {
-	if(symbol == ' ')
-		return 1;
-	return 0;
-}
-
 int IsDigit(char symbol) {
 	if(symbol >= '0' && symbol <= '9')
 		return 1;
@@ -40,13 +36,14 @@ int IsDigit(char symbol) {
 }
 
 int IsOperation(char symbol) {
-	if(symbol == '+' || symbol == '-' || symbol == '*' || symbol == '/')
+	if(symbol == '+' || symbol == '-' || symbol == '*' || symbol == '/' || symbol == '^')
 		return 1;
 	return 0;
 }
 
 int GetPriority(char operation) {
 	switch(operation) {
+		case '^': return 3;
 		case '*': return 2;
 		case '/': return 2;
 		case '+': return 1;
@@ -55,8 +52,9 @@ int GetPriority(char operation) {
 	}
 }
 
-int Calculate(int x, char operation, int y) {
+double Calculate(double x, char operation, double y) {
 	switch(operation) {
+		case '^': return pow(x, y);
 		case '+': return x + y;
 		case '-': return x - y;
 		case '*': return x * y;
@@ -99,10 +97,7 @@ int ReadingFromFile(char *namefile) {
 
 void InfNotation() {
 	while(token = stream[index_stream++]) {
-		if(IsSpace(token)) {
-			continue;
-		}
-		else if(IsDigit(token)) {    
+		if(IsDigit(token)) {    
 			number1 = token - '0'; 
 			while(IsDigit(stream[index_stream])) {
 				token = stream[index_stream++];
