@@ -69,7 +69,7 @@ double Calculate(double x, char operation, double y) {
 }
 
 void ReadingFromConsole() {
-	std::cin >> stream;
+	std::cin.getline(stream, STREAM_SIZE - 1);
 }
 
 int ReadingFromFile(char *namefile) {
@@ -89,12 +89,14 @@ int ReadingFromFile(char *namefile) {
 
 int NoSpace() {
 	while(!IsDigit(stream[index_stream]) && !IsOperation(stream[index_stream])) {
-		if(!stream[index_stream])
+		if(int(stream[index_stream]) == 32)
+			index_stream++;
+		if(int(stream[index_stream]) == 0)
 			return 1;
-		index_stream++;
 	}
 	return 0;
 }
+
 void InfNotation() {
 	while(token = stream[index_stream++]) {
 
@@ -140,7 +142,7 @@ void InfNotation() {
 }
 
 void PolNotation() {
-	while(token == stream[index_stream++]) {
+	while(token = stream[index_stream++]) {
 		if(IsDigit(token)) {    
 			number1 = token - '0'; 
 			while(IsDigit(stream[index_stream])) {
