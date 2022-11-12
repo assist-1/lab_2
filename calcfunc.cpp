@@ -27,6 +27,12 @@ void Help() {
 	std::cout << "\n\n";
 }
 
+int IsSpace(char symbol) {
+	if(symbol == ' ')
+		return 1;
+	return 0;
+}
+
 int IsDigit(char symbol) {
 	if(symbol >= '0' && symbol <= '9')
 		return 1;
@@ -54,7 +60,12 @@ int Calculate(int x, char operation, int y) {
 		case '+': return x + y;
 		case '-': return x - y;
 		case '*': return x * y;
-		case '/': return x / y;
+		case '/':
+			if(y == 0) {
+				std::cerr << "Error: division by zero is not allowed" << std::endl;
+				exit(1);
+			} 
+			return x / y;
 		default:  return 0;
 	}
 }
@@ -86,10 +97,12 @@ int ReadingFromFile(char *namefile) {
 	return 0;
 }
 
-
 void InfNotation() {
-	while(token = stream[index_stream++]) { 
-		if(IsDigit(token)) {    
+	while(token = stream[index_stream++]) {
+		if(IsSpace(token)) {
+			continue;
+		}
+		else if(IsDigit(token)) {    
 			number1 = token - '0'; 
 			while(IsDigit(stream[index_stream])) {
 				token = stream[index_stream++];
@@ -120,19 +133,14 @@ void InfNotation() {
 			}
 			index_operations--;
 		}
-
-		while(index_operations != 0) {
-			operation = operations[--index_operations];
-			number1 = numbers[--index_numbers];
-			number2 = numbers[--index_numbers];
-			numbers[index_numbers++] = Calculate(number2, operation, number1);
-		};
+	}
+	while(index_operations != 0) {
+		operation = operations[--index_operations];
+		number1 = numbers[--index_numbers];
+		number2 = numbers[--index_numbers];
+		numbers[index_numbers++] = Calculate(number2, operation, number1);
 	}
 	std::cout << "Result: " << numbers[--index_numbers] << std::endl;
-	for(int i = 0; i < 5; i++) {
-		std::cout << numbers[i] << " ";
-	}
-	std::cout << "\n";
 }
 
 void PolNotation() {
