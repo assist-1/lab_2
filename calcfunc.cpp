@@ -5,7 +5,7 @@ const int NUMBERS_SIZE    = 256; // размер стека с числами
 const int OPERATIONS_SIZE = 256; // размер стека с операциями
 
 char   stream[STREAM_SIZE];
-double numbers[NUMBERS_SIZE];
+int numbers[NUMBERS_SIZE];
 char   operations[OPERATIONS_SIZE];
 int    index_stream     = 0;
 int    index_numbers    = 0;
@@ -49,7 +49,7 @@ int GetPriority(char operation) {
 	}
 }
 
-double Calculate(double x, char operation, double y) {
+int Calculate(int x, char operation, int y) {
 	switch(operation) {
 		case '+': return x + y;
 		case '-': return x - y;
@@ -88,21 +88,22 @@ int ReadingFromFile(char *namefile) {
 
 
 void InfNotation() {
-	while(token = stream[index_stream++]) { // считываем токен с потока
-		if(IsDigit(token)) {        // если токен - цифра,
-			number1 = token - '0';  // то берем ее как число
-			while(IsDigit(stream[index_stream++])) {     // проверям, есть ли дальше цифры,
-				number1 = number1 * 10 + (token - '0');  // если есть, значит число двух и более значное, добавляем следующую цифру в свой разряд
+	while(token = stream[index_stream++]) { 
+		if(IsDigit(token)) {    
+			number1 = token - '0'; 
+			while(IsDigit(stream[index_stream])) {
+				token = stream[index_stream++];
+				number1 = number1 * 10 + (token - '0');
 			}
-			numbers[index_numbers++] = number1; // получившееся число помещаем в "стек" чисел
+			numbers[index_numbers++] = number1;
 		}
 
 		else if(IsOperation(token)) {
-			while(index_operations != 0 && GetPriority(token) <= GetPriority(operations[index_operations--])) {
-				operation = operations[index_operations];
-				number1 = numbers[index_numbers--];
-				number2 = numbers[index_numbers];
-				numbers[index_numbers++] = Calculate(number1, operation, number2);
+			while(index_operations != 0 && GetPriority(token) <= GetPriority(operations[index_operations - 1])) {
+				operation = operations[--index_operations];
+				number1 = numbers[--index_numbers];
+				number2 = numbers[--index_numbers];
+				numbers[index_numbers++] = Calculate(number2, operation, number1);
 			}
 			operations[index_operations++] = token;
 		}
@@ -115,7 +116,7 @@ void InfNotation() {
 				operation = operations[--index_operations];
 				number1 = numbers[--index_numbers];
 				number2 = numbers[--index_numbers];
-				numbers[index_numbers++] = Calculate(number1, operation, number2);
+				numbers[index_numbers++] = Calculate(number2, operation, number1);
 			}
 			index_operations--;
 		}
@@ -124,12 +125,14 @@ void InfNotation() {
 			operation = operations[--index_operations];
 			number1 = numbers[--index_numbers];
 			number2 = numbers[--index_numbers];
-			numbers[index_numbers++] = Calculate(number1, operation, number2);
-		}
-		index_numbers--;
-		
-		std::cout << "Result: " << numbers[index_numbers] << std::endl;
+			numbers[index_numbers++] = Calculate(number2, operation, number1);
+		};
 	}
+	std::cout << "Result: " << numbers[--index_numbers] << std::endl;
+	for(int i = 0; i < 5; i++) {
+		std::cout << numbers[i] << " ";
+	}
+	std::cout << "\n";
 }
 
 void PolNotation() {
