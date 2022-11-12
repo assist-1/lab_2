@@ -70,14 +70,6 @@ double Calculate(double x, char operation, double y) {
 
 void ReadingFromConsole() {
 	std::cin >> stream;
-	int token_quantity = 0;
-	for(int i = 0; i < STREAM_SIZE; i++) {
-		if(stream[i] != '\0')
-			token_quantity++;
-		else
-			break;
-	}
-	stream[token_quantity] = '\0';
 }
 
 int ReadingFromFile(char *namefile) {
@@ -95,8 +87,17 @@ int ReadingFromFile(char *namefile) {
 	return 0;
 }
 
+int NoSpace() {
+	while(!IsDigit(stream[index_stream]) && !IsOperation(stream[index_stream])) {
+		if(!stream[index_stream])
+			return 1;
+		index_stream++;
+	}
+	return 0;
+}
 void InfNotation() {
 	while(token = stream[index_stream++]) {
+
 		if(IsDigit(token)) {    
 			number1 = token - '0'; 
 			while(IsDigit(stream[index_stream])) {
@@ -139,5 +140,24 @@ void InfNotation() {
 }
 
 void PolNotation() {
-	
+	while(token == stream[index_stream++]) {
+		if(IsDigit(token)) {    
+			number1 = token - '0'; 
+			while(IsDigit(stream[index_stream])) {
+				token = stream[index_stream++];
+				number1 = number1 * 10 + (token - '0');
+			}
+			numbers[index_numbers++] = number1;
+			NoSpace();
+		}
+		else if(IsOperation(token)) {
+			number1 = numbers[--index_numbers];
+			number2 = numbers[--index_numbers];
+			numbers[index_numbers++] = Calculate(number2, token, number1);
+			NoSpace();
+		}
+		if(NoSpace())
+			break;
+	}
+	std::cout << "Result: " << numbers[--index_numbers] << std::endl;
 }

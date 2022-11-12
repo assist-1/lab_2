@@ -23,7 +23,7 @@ int main(int argc, char ** argv) {
 		else if(!(strcmp(argv[1], flags[1]))) {
 			cout << "Please enter your task in Polish Notation:" << endl;
 			ReadingFromConsole();
-			//PolNotation();
+			PolNotation();
 		}
 		else if(!(strcmp(argv[1], flags[2])))
 			Help();
@@ -34,14 +34,15 @@ int main(int argc, char ** argv) {
 		}
 	}
 	else if(argc == 4) {
-		if(!(strcmp(argv[2], flags[3]))) {
+		if(!(strcmp(argv[2], flags[2]))) {
+
 			char *namefile = argv[3];
 			if(ReadingFromFile(namefile)) {
 				if(!(argv[1], flags[0])) {
 					InfNotation();
 				}
 				else if(!(strcmp(argv[1], flags[1]))) {
-					//PolNotation();
+					PolNotation();
 				}
 			}
 		}
