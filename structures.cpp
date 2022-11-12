@@ -1,8 +1,8 @@
 #include "structures.h"
 
-LinkedListNode *push(LinkedListNode *stack_top, Token value) {
+LinkedListNode *push(LinkedListNode *stack_top, Token value) { // добавляем новый элемент (токен) в стек
     if (!stack_top) { // если в стеке пусто
-        stack_top = new LinkedListNode();  // создаем 1 элемент
+        stack_top = new LinkedListNode();  // создаем первый элемент
     } else {
         stack_top->next = new LinkedListNode(); // иначе к посл эл - ту приклеиваем новый
         stack_top->next->prev = stack_top; // связываем этот новый эл - т со stack_top как с предыдущим
