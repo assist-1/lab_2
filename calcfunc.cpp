@@ -1,10 +1,12 @@
 #include <iostream>
 #include <fstream>
+#include <cstring>
 #include <cmath>
 
-const int STREAM_SIZE     = 256; // размер массива элементов потока
-const int NUMBERS_SIZE    = 256; // размер массива с числами
-const int OPERATIONS_SIZE = 256; // размер массива с операциями
+const int STREAM_SIZE     = 64; // размер массива элементов потока
+const int NUMBERS_SIZE    = 64; // размер массива с числами
+const int OPERATIONS_SIZE = 64; // размер массива с операциями
+const char * notations[2] = {"--forward", "--reverse"};
 
 char   stream[STREAM_SIZE];
 double numbers[NUMBERS_SIZE];
@@ -19,9 +21,9 @@ char   operation;
 void Help() {
 	std::cout << "\n";
 	std::cout << "################################_INSTRUCTION_###############################" << std::endl;
-	std::cout << "You need to enter: ./'prog_name' [1] [2] [3]"                                 << std::endl;
+	std::cout << "You need to enter: ./'program_name' [1] [2] [3]"                              << std::endl;
 	std::cout << "----------------------------------------------------------------------------" << std::endl;
-	std::cout << "[1] flags about notation (necessarily): '--forward' '--reverse' "             << std::endl;
+	std::cout << "[1] flags about notation (necessarily): '--forward' '--reverse' '--help'"     << std::endl;
 	std::cout << "[2] flag about reading (not necessarily): '--file' (from console by default)" << std::endl;
 	std::cout << "[3] file name (if entered --file)"                                            << std::endl;
 	std::cout << "----------------------------------------------------------------------------" << std::endl;
@@ -70,21 +72,6 @@ double Calculate(double x, char operation, double y) {
 
 void ReadingFromConsole() {
 	std::cin.getline(stream, STREAM_SIZE - 1);
-}
-
-int ReadingFromFile(char *namefile) {
-	std::ifstream f;
-	if(f.is_open()) {
-		char symbol;
-		int i = 0;
-		while(f >> symbol) {	
-			stream[i] = symbol;
-			i++;
-		}
-		f.close();
-		return 1;
-	}
-	return 0;
 }
 
 int NoSpace() {
@@ -162,4 +149,23 @@ void PolNotation() {
 			break;
 	}
 	std::cout << "Result: " << numbers[--index_numbers] << std::endl;
+}
+
+void ReadingFromFile(char *namefile, char *flag) {
+	std::ifstream in(namefile);
+	if(in.is_open()) {
+		int i = 1;
+		while(in.getline(stream, STREAM_SIZE - 1)) {
+			std::cout << i << ") ";
+			if(!(strcmp(flag, notations[0])))
+				InfNotation();
+			else
+				PolNotation();
+			i++;
+		}
+	}
+	else {
+		std::cerr << "###_ERROR: file couldn't be opened_###" << std::endl;
+		exit(1);
+	}
 }

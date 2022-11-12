@@ -34,17 +34,11 @@ int main(int argc, char ** argv) {
 		}
 	}
 	else if(argc == 4) {
-		if(!(strcmp(argv[2], flags[2]))) {
-
+		if(!(strcmp(argv[2], flags[3]))) {
 			char *namefile = argv[3];
-			if(ReadingFromFile(namefile)) {
-				if(!(argv[1], flags[0])) {
-					InfNotation();
-				}
-				else if(!(strcmp(argv[1], flags[1]))) {
-					PolNotation();
-				}
-			}
+			char *flag = argv[1];
+			if(!(strcmp(argv[1], flags[0])) || !(strcmp(argv[1], flags[1])))
+				ReadingFromFile(namefile, flag);
 		}
 		else {
 			cerr << "###_ERROR: flag entered incorrectly_###" << endl;
