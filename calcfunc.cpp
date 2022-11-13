@@ -36,7 +36,7 @@ void Help() {
 	std::cout << " --console: using reading from console"                                       << std::endl;
 	std::cout << " --file:    using reading from file"                                          << std::endl;
 	std::cout << "############################################################################" << std::endl;
-	std::cout << "\n\n";
+	std::cout << "\n";
 }
 
 int IsDigit(char symbol) {
@@ -76,16 +76,6 @@ double Calculate(double x, char operation, double y) {
 			return x / y;
 		default:  return 0;
 	}
-}
-
-int NoSpace() {
-	while(!IsDigit(stream[index_stream]) && !IsOperation(stream[index_stream])) {
-		if(int(stream[index_stream]) == 32)
-			index_stream++;
-		if(int(stream[index_stream]) == 0)
-			return 1;
-	}
-	return 0;
 }
 
 void InfNotation() {
@@ -143,16 +133,12 @@ void PolNotation() {
 				number1 = number1 * 10 + (token - '0');
 			}
 			numbers[index_numbers++] = number1;
-			NoSpace();
 		}
 		else if(IsOperation(token)) {
 			number1 = numbers[--index_numbers];
 			number2 = numbers[--index_numbers];
 			numbers[index_numbers++] = Calculate(number2, token, number1);
-			NoSpace();
 		}
-		if(NoSpace())
-			break;
 	}
 	std::cout << "Result: " << numbers[--index_numbers] << std::endl;
 }
