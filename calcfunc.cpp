@@ -23,8 +23,8 @@ void Help() {
 	std::cout << "################################_INSTRUCTION_###############################" << std::endl;
 	std::cout << "You need to enter: [./'program_name'] [1] [2] (3)"                            << std::endl;
 	std::cout << "----------------------------------------------------------------------------" << std::endl;
-	std::cout << "[ ]: necessarily to be entered" 												<< std::endl;
-	std::cout << "( ): not necessarily to be entered" 											<< std::endl;
+	std::cout << "[ ]: necessarily to be entered"                                               << std::endl;
+	std::cout << "( ): not necessarily to be entered"                                           << std::endl;
 	std::cout << "----------------------------------------------------------------------------" << std::endl;
 	std::cout << "[1] flags about instruction or notation: '--help' '--forward' '--reverse'"    << std::endl;
 	std::cout << "[2] flags about reading: '--file' '--console'"                                << std::endl;
@@ -32,7 +32,7 @@ void Help() {
 	std::cout << "-------------------------------MEANING OF FLAGS-----------------------------" << std::endl;
 	std::cout << " --help:    instruction output"                                               << std::endl;
 	std::cout << " --forward: using Infix Notation"                                             << std::endl;
-	std::cout << " --reverse: using Polish Notation"                							<< std::endl;
+	std::cout << " --reverse: using Polish Notation"                                            << std::endl;
 	std::cout << " --console: using reading from console"                                       << std::endl;
 	std::cout << " --file:    using reading from file"                                          << std::endl;
 	std::cout << "############################################################################" << std::endl;

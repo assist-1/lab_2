@@ -7,7 +7,7 @@ int main(int argc, char ** argv) {
 	const char * flags[5] = {"--forward", "--reverse", "--console", "--file", "--help"};
 
 	if(argc == 1) {  // Если введено только название файла
-		std::cerr << "###_ERROR: flag not found_###" << std::endl;
+		std::cerr << "###_ERROR: flag not found_###"                                              << std::endl;
 		std::cerr << "###_You can entered '--help' after program name for instruction output_###" << std::endl;
 		exit(1);
 	}
@@ -16,12 +16,12 @@ int main(int argc, char ** argv) {
 			Help();
 		}
 		else if(!(strcmp(argv[1], flags[0])) || !(strcmp(argv[1], flags[1]))) {
-			std::cerr << "###_ERROR: flag about reading not entered_###" 					          << std::endl;
+			std::cerr << "###_ERROR: flag about reading not entered_###"                              << std::endl;
 			std::cerr << "###_You can entered '--help' after program name for instruction output_###" << std::endl;
 			exit(1);
 		}
 		else { // Иначе ошибка в флаге или названии файла
-			std::cerr << "###_ERROR: flag entered incorrectly_###" 					                  << std::endl;
+			std::cerr << "###_ERROR: flag entered incorrectly_###"                                    << std::endl;
 			std::cerr << "###_You can entered '--help' after program name for instruction output_###" << std::endl;
 			exit(1);
 		}
@@ -39,7 +39,7 @@ int main(int argc, char ** argv) {
 				PolNotation();
 			}
 			else { //Иначе введен неправильно флаг или название файла
-				std::cerr << "###_ERROR: flag entered incorrectly_###" 					                  << std::endl;
+				std::cerr << "###_ERROR: flag entered incorrectly_###"                                    << std::endl;
 				std::cerr << "###_You can entered '--help' after program name for instruction output_###" << std::endl;
 				exit(1);
 			}
@@ -50,7 +50,7 @@ int main(int argc, char ** argv) {
 			exit(1);
 		}
 		else { //Иначе чел опять неправильно что-то ввел
-			std::cerr << "###_ERROR: flag entered incorrectly_###" 		                 			  << std::endl;
+			std::cerr << "###_ERROR: flag entered incorrectly_###"                                    << std::endl;
 			std::cerr << "###_You can entered '--help' after program name for instruction output_###" << std::endl;
 			exit(1);
 		}
@@ -62,19 +62,19 @@ int main(int argc, char ** argv) {
 			if(!(strcmp(argv[1], flags[0])) || !(strcmp(argv[1], flags[1])))
 				ReadingFromFile(namefile, flag);
 			else {
-				std::cerr << "###_ERROR: flag entered incorrectly_###" 		                			  << std::endl;
+				std::cerr << "###_ERROR: flag entered incorrectly_###"                                    << std::endl;
 				std::cerr << "###_You can entered '--help' after program name for instruction output_###" << std::endl;
 				exit(1);
 			}
 		}
 		else {
-			std::cerr << "###_ERROR: flag entered incorrectly_###" 				                	  << std::endl;
+			std::cerr << "###_ERROR: flag entered incorrectly_###"                                    << std::endl;
 			std::cerr << "###_You can entered '--help' after program name for instruction output_###" << std::endl;
 			exit(1);
 		}
 	}
 	else {
-		std::cerr << "###_ERROR: flag entered incorrectly_###" 					                  << std::endl;
+		std::cerr << "###_ERROR: flag entered incorrectly_###"                                    << std::endl;
 		std::cerr << "###_You can entered '--help' after program name for instruction output_###" << std::endl;
 		exit(1);
 	}
