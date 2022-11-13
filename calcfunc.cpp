@@ -26,9 +26,9 @@ void Help() {
 	std::cout << "[ ]: necessarily to be entered" 												<< std::endl;
 	std::cout << "( ): not necessarily to be entered" 											<< std::endl;
 	std::cout << "----------------------------------------------------------------------------" << std::endl;
-	std::cout << "[1] flags about notation: '--help' '--forward' '--reverse'"                   << std::endl;
+	std::cout << "[1] flags about instruction or notation: '--help' '--forward' '--reverse'"    << std::endl;
 	std::cout << "[2] flags about reading: '--file' '--console'"                                << std::endl;
-	std::cout << "(3) file name (if entered '--file')"                                          << std::endl;
+	std::cout << "(3) file name (necessarily, if entered '--file')"                             << std::endl;
 	std::cout << "-------------------------------MEANING OF FLAGS-----------------------------" << std::endl;
 	std::cout << " --help:    instruction output"                                               << std::endl;
 	std::cout << " --forward: using Infix Notation"                                             << std::endl;
@@ -81,7 +81,6 @@ double Calculate(double x, char operation, double y) {
 void InfNotation() {
 	index_stream = 0;
 	while(token = stream[index_stream++]) {
-
 		if(IsDigit(token)) {    
 			number1 = token - '0'; 
 			while(IsDigit(stream[index_stream])) {
@@ -90,7 +89,6 @@ void InfNotation() {
 			}
 			numbers[index_numbers++] = number1;
 		}
-
 		else if(IsOperation(token)) {
 			while(index_operations != 0 && GetPriority(token) <= GetPriority(operations[index_operations - 1])) {
 				operation = operations[--index_operations];
@@ -100,10 +98,8 @@ void InfNotation() {
 			}
 			operations[index_operations++] = token;
 		}
-		
 		else if(token == '(')
 			operations[index_operations++] = token;
-		
 		else if(token == ')') {
 			while(operations[index_operations - 1] != '(') {
 				operation = operations[--index_operations];
@@ -160,6 +156,7 @@ void ReadingFromFile(char *namefile, char *flag) {
 				PolNotation();
 			i++;
 		}
+		in.close();
 	}
 	else {
 		std::cerr << "###_ERROR: file couldn't be opened_###" << std::endl;
