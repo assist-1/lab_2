@@ -3,7 +3,7 @@
 
 void Help();
 void ReadingFromConsole();
-int ReadingFromFile(char *namefile, char *flag);
+void ReadingFromFile(char *namefile, char *flag);
 void InfNotation();
 void PolNotation();
 

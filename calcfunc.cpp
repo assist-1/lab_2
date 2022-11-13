@@ -3,9 +3,9 @@
 #include <cstring>
 #include <cmath>
 
-const int STREAM_SIZE     = 64; // размер массива элементов потока
-const int NUMBERS_SIZE    = 64; // размер массива с числами
-const int OPERATIONS_SIZE = 64; // размер массива с операциями
+const int STREAM_SIZE     = 32;
+const int NUMBERS_SIZE    = 32;
+const int OPERATIONS_SIZE = 32;
 const char * notations[2] = {"--forward", "--reverse"};
 
 char   stream[STREAM_SIZE];
@@ -21,12 +21,20 @@ char   operation;
 void Help() {
 	std::cout << "\n";
 	std::cout << "################################_INSTRUCTION_###############################" << std::endl;
-	std::cout << "You need to enter: ./'program_name' [1] [2] [3]"                              << std::endl;
+	std::cout << "You need to enter: [./'program_name'] [1] [2] (3)"                            << std::endl;
 	std::cout << "----------------------------------------------------------------------------" << std::endl;
-	std::cout << "[1] flags about notation (necessarily): '--forward' '--reverse' '--help'"     << std::endl;
-	std::cout << "[2] flag about reading (not necessarily): '--file' (from console by default)" << std::endl;
-	std::cout << "[3] file name (if entered --file)"                                            << std::endl;
+	std::cout << "[ ]: necessarily to be entered" 												<< std::endl;
+	std::cout << "( ): not necessarily to be entered" 											<< std::endl;
 	std::cout << "----------------------------------------------------------------------------" << std::endl;
+	std::cout << "[1] flags about notation: '--help' '--forward' '--reverse'"                   << std::endl;
+	std::cout << "[2] flags about reading: '--file' '--console'"                                << std::endl;
+	std::cout << "(3) file name (if entered '--file')"                                          << std::endl;
+	std::cout << "-------------------------------MEANING OF FLAGS-----------------------------" << std::endl;
+	std::cout << " --help:    instruction output"                                               << std::endl;
+	std::cout << " --forward: using Infix Notation"                                             << std::endl;
+	std::cout << " --reverse: using Polish Notation"                							<< std::endl;
+	std::cout << " --console: using reading from console"                                       << std::endl;
+	std::cout << " --file:    using reading from file"                                          << std::endl;
 	std::cout << "############################################################################" << std::endl;
 	std::cout << "\n\n";
 }
@@ -62,16 +70,12 @@ double Calculate(double x, char operation, double y) {
 		case '*': return x * y;
 		case '/':
 			if(y == 0) {
-				std::cerr << "Error: division by zero is not allowed" << std::endl;
+				std::cerr << "###_ERROR: division by zero is not allowed_###" << std::endl;
 				exit(1);
 			} 
 			return x / y;
 		default:  return 0;
 	}
-}
-
-void ReadingFromConsole() {
-	std::cin.getline(stream, STREAM_SIZE - 1);
 }
 
 int NoSpace() {
@@ -85,6 +89,7 @@ int NoSpace() {
 }
 
 void InfNotation() {
+	index_stream = 0;
 	while(token = stream[index_stream++]) {
 
 		if(IsDigit(token)) {    
@@ -129,6 +134,7 @@ void InfNotation() {
 }
 
 void PolNotation() {
+	index_stream = 0;
 	while(token = stream[index_stream++]) {
 		if(IsDigit(token)) {    
 			number1 = token - '0'; 
@@ -151,12 +157,17 @@ void PolNotation() {
 	std::cout << "Result: " << numbers[--index_numbers] << std::endl;
 }
 
+void ReadingFromConsole() {
+	std::cin.getline(stream, STREAM_SIZE - 1);
+}
+
 void ReadingFromFile(char *namefile, char *flag) {
 	std::ifstream in(namefile);
 	if(in.is_open()) {
 		int i = 1;
-		while(in.getline(stream, STREAM_SIZE - 1)) {
+		while(!in.eof()) {
 			std::cout << i << ") ";
+			in.getline(stream, STREAM_SIZE - 1);
 			if(!(strcmp(flag, notations[0])))
 				InfNotation();
 			else
