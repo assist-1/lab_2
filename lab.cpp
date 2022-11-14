@@ -1,5 +1,5 @@
 #include <iostream>
-#include <math.h>
+#include <cstring>
 
 struct Stack {
 	char c;
@@ -8,7 +8,7 @@ struct Stack {
 
 void reverse(char* m, int l);
 void forward(char *m);
-void initialization(char** argv, int file, char* m);
+int initialization(char** argv, int file, char* m);
 int Priority(char c);
 Stack *InChar(Stack *p, char s);
 Stack *OutChar(Stack *p, char *s);
@@ -21,13 +21,13 @@ int main(int argc, char** argv) {
 	int l = 0;
 	for (int i = 1; i < argc; i++) {
 		if (argv[i][0] == '-') {
-			if (argv[i][3] == 'i') {
+			if ((std::strcmp(argv[i], "--file")) == 0) {
 				file = 1;
 			}
-			else if (argv[i][2] == 'r') {
+			else if ((std::strcmp(argv[i], "--reverse")) == 0) {
 				metod = 1;
 			}
-			else if (argv[i][3] == 'o') {
+			else if ((std::strcmp(argv[i], "--forward")) == 0) {
 				metod = 2;
 			}
 		}
@@ -36,28 +36,30 @@ int main(int argc, char** argv) {
 		}
 	}
 	if (metod == 1) {
-		initialization(argv, file, m);
-		l = lenght(m);
-		std::cout << "Input: " << m << std::endl;
-		reverse(m, l);
+		if (initialization(argv, file, m)) {
+			std::cout << "Input: " << m << std::endl;
+			l = lenght(m);
+			reverse(m, l);
+		}
 	}
 	else if (metod == 2) {
-		initialization(argv, file, m);
-		std::cout << "Input: " << m << std::endl;
-		forward(m);
+		if (initialization(argv, file, m)) {
+			std::cout << "Input: " << m << std::endl;
+			forward(m);
+		}
 	}
 	else {
-		std::cout << "Input error 1" << std::endl;
+		std::cout << "Input error 1: Incorrect flags" << "\n"<<std::endl;
 	}
 	return 0;
 }
 
-void initialization(char** argv, int file, char* m) {
+int initialization(char** argv, int file, char* m) {
 	int j = 0;
 	if (file != 0) {
 		FILE* fp;
 		if ((fp = fopen(argv[file], "r")) == NULL) {
-			std::cout << "File doesn't exist" << std::endl;
+			std::cout << "File doesn't exist" << "\n" << std::endl;
 		}
 		else {
 			while ((m[j] = fgetc(fp)) != EOF) {
@@ -68,7 +70,9 @@ void initialization(char** argv, int file, char* m) {
 		}
 	} else {
 		std::cin.getline(m, 1024);
+		j = 1;
 	}
+	return j;
 }
 
 void forward(char *m) {
@@ -78,7 +82,12 @@ void forward(char *m) {
 	int k = 0, l = 0;
 	while (m[k] != '\0') {
 		if (m[k] >= '0' && m[k] <= '9') {
-			Out[l++] = m[k];
+			while (m[k] >= '0' && m[k] <= '9') {
+				Out[l++] = m[k];
+				k++;
+			}
+			k--;
+			Out[l++] = ' ';
 		}
 		else if (m[k] == '(') {
 			Op = InChar(Op, m[k]);
@@ -90,15 +99,17 @@ void forward(char *m) {
 					a = '\0';
 				}
 				Out[l++] = a;
+				Out[l++] = ' ';
 			}
 			t = Op;
 			Op = Op ->next;
 			delete t;
 		}
-		else if (m[k] == '+' || m[k] == '-' || m[k] == '*' || m[k] == '/' || m[k] == '^') {
+		else if (m[k] == '+' || m[k] == '-' || m[k] == '*' || m[k] == '/') {
 			while (Op != NULL && Priority(Op->c) >= Priority(m[k])) {
 				Op = OutChar(Op, &a);
 				Out[l++] = a;
+				Out[l++] = ' ';
 			}
 			Op = InChar(Op, m[k]);
 		}
@@ -107,6 +118,9 @@ void forward(char *m) {
 	while (Op != NULL) {
 		Op = OutChar(Op, &a);
 		Out[l++] = a;
+		if (Op != NULL) {
+			Out[l++] = ' ';
+		}
 	}
 	Out[l] = '\0';
 	reverse(Out, l);
@@ -117,31 +131,46 @@ void reverse(char *m, int l) {
 	double Res[4];
 	int k = 0;
 	double rez = 0;
+	double prom = 0;
+	int buf = 0;
+	int math = 0;
 	for (int i = 0; i < l; i++) {
 		if (m[i] >= '0' && m[i] <= '9') {
-			Res[k++] = (int)m[i] - 48;
+			buf = i;
+			while (m[buf+1] >= '0' && m[buf+1] <= '9') {
+				buf++;
+			}
+			prom = m[buf] - 48;
+			i = buf;
+			while (m[buf-1] >= '0' && m[buf-1] <= '9') {
+				math = m[buf-1] - 48;
+				for (int p = 0; p < i - buf + 1; p++) {
+					math = 10 * math;
+				}
+				prom = prom + math;
+				buf--;
+			}
+			Res[k++] = prom;
 		} 
-		else if (m[i] == '+' || m[i] == '-' || m[i] == '*' || m[i] == '/' || m[i] == '^') {
+		else if (m[i] == '+' || m[i] == '-' || m[i] == '*' || m[i] == '/') {
 			switch(m[i]) {
 				case '+': rez = Res[k - 2] + Res[k-1]; break;
 				case '-': rez = Res[k - 2] - Res[k-1]; break;
 				case '*': rez = Res[k - 2] * Res[k-1]; break;
 				case '/': rez = Res[k - 2] / Res[k-1]; break;
-				case '^': rez = pow(Res[k - 2],Res[k-1]); break;
 			}
 			Res[k-2] = rez;
 			k = k - 1;
 		}
 	}
-	std::cout << "Result: " << rez << std::endl; 
+	std::cout << "Result: ";
+	std::cout.precision(10);
+	std::cout << rez << "\n" << std::endl; 
 }
 
 int Priority(char c) {
 	int prior = 0;
 	switch (c) {
-		case '^':
-			prior = 4;
-			break;
 		case '*':
 			prior = 3;
 			break;
