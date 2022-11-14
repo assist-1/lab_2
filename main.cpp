@@ -3,6 +3,7 @@
 #include "mylib.h"
 int main(int argc,char* argv[]){
     int ans;
+
     if (argc ==2){
         if (strcmp(argv[1],"--reverse")==0)
             ans=opn(0);
@@ -13,5 +14,8 @@ int main(int argc,char* argv[]){
             ans=opn(1);
         else if (strcmp(argv[1],"--forward")==0 && strcmp(argv[2],"--file")==0) ans=zad1(1);
     }
-    std::cout<<ans<<'\n';
+    if (ans==-100000000)
+        std::cout<<"Ошибка при вводе"<< '\n';
+    else
+        std::cout<<ans<<'\n';
 }
