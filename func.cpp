@@ -4,7 +4,7 @@
 using std::cout;
 using std::endl;
 using std::cin;
-using std::fstream;
+using std::ifstream;
 const int LENSTR = 200;
 char exp[LENSTR];
 char SymStack[500]; // стек символов
@@ -26,14 +26,14 @@ void ReadFromCin(){
     exp[s] = '\0';
 }
 int ReadFromFile(char *name){
-    fstream file;
+    ifstream file(name);
     char sym;
     int i = 0;
     if (file.is_open()){
         while (file >> sym){
             exp[i] = sym;
             i++;
-    }
+        }
         file.close();
         return 0;
     }

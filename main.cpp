@@ -30,14 +30,16 @@ int main(int argc,char **argv){
             char *namefile = argv[3];
 
             if (ReadFromFile(namefile) == 1){
-                if ((!strcmp(argv[1],flag[0]))){
+                cout << "Wrong file read" << endl;
+                }
+            else if ((!strcmp(argv[1],flag[0]))){
                     Forward();
                 }
-                if (!strcmp(argv[1],flag[1])){
+            else if (!strcmp(argv[1],flag[1])){
                     Reverse();
                 }
             }
-        }
+
         else {
             cerr << "Wrong flags" << endl;
             Options();
