@@ -148,6 +148,7 @@ int opz() {
     char simv;
     char oper;
     double number;
+    bool flag=1;
     std::cout<<"Enter the expression:"<<std::endl;
     std::stack <double> stack_operand;
     while (true){
@@ -158,11 +159,13 @@ int opz() {
             std::cin.ignore();
             continue;
         }
-        if (simv>='0' & simv<='9'){
+        if (simv>='0' & simv<='9' || (simv == '-' && flag==1)){
             std::cin>>number;
             stack_operand.push(number);
+            flag=0;
+            continue;
         }
-        if (simv=='+' || simv=='-' || simv=='/' || simv=='*'){
+        if (simv=='+' || (simv=='-' && flag==0) || simv=='/' || simv=='*'){
             std::cin >> oper;
             double a,b,c;
             switch (oper){
@@ -209,10 +212,7 @@ int opz() {
             }
             continue;
         }
-        else {
-            std::cout<< "Value entered incorrectly"<<std::endl;
-            return 0;
-        }
+
     }
     std::cout<<"Result:"<<stack_operand.top()<<std::endl;
     return 0;
