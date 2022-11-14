@@ -85,7 +85,7 @@ int main(int argc, char *argv[]) {
         }
     } else if (argc >= 2 && strcmp("--file", argv[2]) == 0) { //Считываем с файла
         std::ifstream input(argv[3]);
-        cin.rdbuf(input.rdbuf());      //изменяем поток ввода с консоли на поток ввода с файла
+        cin.rdbuf(input.rdbuf());      //изменяем буфер потока ввода с консоли на буфер потока ввода с файла
         end = EOF;
         while (arg != end) {
             arg = cin.peek();
