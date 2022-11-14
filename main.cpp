@@ -17,7 +17,7 @@ int main(int argc,char **argv){
             ReadFromCin();
             Forward();
         }
-        if (!strcmp(argv[1],flag[1])){
+        else if (!strcmp(argv[1],flag[1])){
             cout << "Enter in Pollish form" << endl;
             ReadFromCin();
             Reverse();
