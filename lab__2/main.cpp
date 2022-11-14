@@ -80,7 +80,7 @@ int main(int argc, char **argv) {
             if ((sign >= '0' && sign <= '9') || (sign == '-' && fl == 1)) {
                 cin >> ch;
                 num[n] = ch;
-                std::cout << num[n] << "\n";
+                // std::cout << num[n] << "\n";
                 ++n;
                 fl = 0;
                 continue;
@@ -118,6 +118,7 @@ int main(int argc, char **argv) {
                 continue;
             }
         }
+        inp.close();
         while (p != 0) {
             k = answ(num[n - 1], num[n - 2], op[p-1]);
             num[n - 2] = k;
