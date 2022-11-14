@@ -143,3 +143,6 @@ int calculate(std::istream &input_stream, bool reverse) {
     }
     return usual_calculate(head);
 }
+/ *
+* add memory deallocation for stack objects
+** /
