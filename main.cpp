@@ -3,7 +3,6 @@
 #include "mylib.h"
 int main(int argc,char* argv[]){
     int ans;
-
     if (argc ==2){
         if (strcmp(argv[1],"--reverse")==0)
             ans=opn(0);
@@ -16,6 +15,8 @@ int main(int argc,char* argv[]){
     }
     if (ans==-100000000)
         std::cout<<"Ошибка при вводе"<< '\n';
+    else if (ans==-10000000)
+        std::cout<<"Деление на 0 невозможно"<< '\n';
     else
         std::cout<<ans<<'\n';
 }
