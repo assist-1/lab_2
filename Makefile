@@ -1,13 +1,11 @@
-PR = laba2
+OBJS=functions.o main.o
 
-$(PR) : main.o func.o
-	g++ main.o func.o -o $(PR)
+prog: $(OBJS)
+	g++ -o prog $(OBJS)
 
-main.o : main.cpp
-	g++ -c main.cpp -o main.o
+.PHONY: clean
+clean:
+	$(RM) $(OBJS)
 
-func.o : func.cpp
-	g++ -c func.cpp -o func.o
-
-clean :
-	rm $(PR) *.o
+distclean: clean
+	$(RM) prog
