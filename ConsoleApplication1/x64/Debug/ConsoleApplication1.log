@@ -1,0 +1,4 @@
+﻿  ConsoleApplication1.cpp
+C:\Users\Den\source\repos\ConsoleApplication1\ConsoleApplication1\ConsoleApplication1.cpp(183,23): warning C4244: return: преобразование "float" в "int", возможна потеря данных
+C:\Users\Den\source\repos\ConsoleApplication1\ConsoleApplication1\ConsoleApplication1.cpp(63): warning C4715: Polish: значение возвращается не при всех путях выполнения
+  ConsoleApplication1.vcxproj -> C:\Users\Den\source\repos\ConsoleApplication1\x64\Debug\ConsoleApplication1.exe
