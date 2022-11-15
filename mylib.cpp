@@ -16,20 +16,10 @@ private:
 public:
     stackdlyachisel() {
     }
-    void push(int a) {
-        mas[i] = a;
-        i++;
-    }
-    void pop() {
-        mas[i - 1] = 0;
-        i--;
-    }
-    float top() {
-        return mas[i - 1];
-    }
-    int size() {
-        return i;
-    }
+    void pop() {mas[i - 1] = 0;i--;}
+    void push(int a) {mas[i] = a;i++;}
+    int top() {return mas[i - 1];}
+    int size() {return i;}
 };
 bool is_digit(char s){
     if (s>='0' && s<='9')
