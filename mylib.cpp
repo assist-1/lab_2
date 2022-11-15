@@ -206,8 +206,12 @@ int zad1(int flag) {
                     else j--;
                 }
                 else if (stck2.top()==-6){
-                    stck1.push(v/u);
-                    stck2.pop();
+                    if (u!=0){
+                        stck1.push(v/u);
+                        stck2.pop();
+                    }
+                    else
+                        return -10000000;
                     if (prioritet(stck2.top())<prioritet(arr[j]))
                         stck2.push(arr[j]);
                     else j--;
@@ -236,8 +240,12 @@ int zad1(int flag) {
                     stck2.pop();
                 }
                 else if (stck2.top()==-6){
-                    stck1.push(v/u);
-                    stck2.pop();
+                    if (u!=0){
+                        stck1.push(v/u);
+                        stck2.pop();
+                    }
+                    else
+                        return -10000000;
                 }
             }
             i--;
@@ -245,13 +253,11 @@ int zad1(int flag) {
         }
     }
     file2.close();
-    //std::cout<<stck1.top()<<'\n';
     return stck1.top();
 }
 
 int opn(int flag) {
     std::ifstream file1;
-    stackdlyachisel stck1, stck2;
     int f = 0;
     int arr[100];
     std::string str;
@@ -263,7 +269,6 @@ int opn(int flag) {
     while (f == 0) {
         if (flag == 0) {
             c =getchar();
-            //std::cout << c;
             if (vozmozhnsimv(c) != 1)
                 return -100000000;
         } else {
@@ -303,14 +308,17 @@ int opn(int flag) {
                 i--;
             }
             if (operation(c) == -6) {
-                arr[i - 1] = arr[i-1] / arr[i];
-                i--;
+                if (arr[i]!=0) {
+                    arr[i - 1] = arr[i - 1] / arr[i];
+                    i--;
+                }
+                else
+                    return -10000000;
             }
         }
         else if (is_ravno(c)==true) {
             f = 1;
             file1.close();
-            //std::cout << arr[i];
             return arr[i];
         }
     }
