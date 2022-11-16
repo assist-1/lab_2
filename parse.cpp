@@ -8,18 +8,19 @@ int Digits[200];
 char Ops[200];
 int Digits_len = 0;
 int Ops_len = 0;
-bool number = false;  // flag indicating whether the length of current number is more than one symbol
+bool number = false;
+std::ifstream input("input.txt");
 
 
 int convert_to_int(char digit) {return digit - '0';}
 
 
-int GetSymbol() {
-    char s = getchar();
+int GetSymbol(bool from_file) {
+    char s;
+    if (from_file) s = input.get();
+    else s = getchar();
 
-    if(s == '\n' ) {
-        return 0;
-    }   
+    if(s == EOF || s == '\n') return 0;
 
     Symbol = s;
     return 1;
@@ -36,13 +37,12 @@ int precedence(char op){
 
 
 int eval(int a, int b, char op) {
-    switch (op) {
-        case '+': return a + b;
-        case '-': return a - b;
-        case '*': return a * b;
-        case '/': return a / b;
-        case '^': return pow(a, b);
-    }
+    if (op == '+') return a + b;
+    if (op == '-') return a - b;
+    if (op == '*') return a * b;
+    if (op == '/') return a / b;
+    if (op == '^') return pow(a, b);
+    return 0;
 }
 
 
@@ -105,8 +105,15 @@ void digit() {
 }
 
 
-int main() {
-    while (GetSymbol()) {
+int parse(bool from_file) {
+    if (from_file) {
+        if (!input) {
+            std::cerr << "Unable to open input file" << std::endl;
+            return -1;
+        }
+    }
+
+    while (GetSymbol(from_file)) {
     if (isdigit(Symbol)) {
         digit();
     } 
@@ -128,8 +135,7 @@ int main() {
         Digits[Digits_len] = eval(a, b, op);
     }
 
+    if (from_file) input.close();
 
-    std::cout << Digits[Digits_len] << std::endl;
-    return 0;
-    // return Digits[Digits_len];
+    return Digits[Digits_len];
 }

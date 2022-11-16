@@ -1,6 +1,4 @@
-#include <iostream>
-#include <fstream>
-#include <parse.cpp>
+#include "parse.cpp"
 
 int main(int argc, char* argv[]) {
     if (argc == 1) {
@@ -38,18 +36,11 @@ int main(int argc, char* argv[]) {
         return EXIT_FAILURE;
     }
 
-    std::cout << parse() << std::endl;
+    std::cout << parse(from_file) << std::endl;
     return 0;
 
 
-    if (from_file) {
-        std::ifstream input ("input.txt");
-        
-        if (!input) {
-            std::cerr << "Unable to open input file" << std::endl;
-            return EXIT_FAILURE;
-        }
-    }
+
 
 
 }
