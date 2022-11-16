@@ -4,7 +4,7 @@ HEADER	= parse.h
 OUT		= run
 CC		= g++
 FLAGS	= -g -c 
-LFLAGS	= -W --allow-multiple-definition
+LFLAGS	= -Wl,--allow-multiple-definition
 
 all: $(OBJS)
 	$(CC) -w $(OBJS) -o $(OUT) $(LFLAGS)
