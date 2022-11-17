@@ -2,6 +2,7 @@ CC=g++
 Fcu = -c
 Fend = -o
 
+
 make : main.o calc_lib.cpp
 	$(CC) main.o $(Fend) main calc_lib.cpp
 
