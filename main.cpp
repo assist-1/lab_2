@@ -100,6 +100,8 @@ int main(int argc, char **argv) {
                     }
                 }
             }
+        } else{
+            std::cerr << "Your expression is wrong.";
         }
 
 
