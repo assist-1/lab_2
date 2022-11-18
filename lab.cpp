@@ -205,7 +205,7 @@ Stack* OutChar(Stack *p, char *s) {
 	return p;
 }
 
-int lenght(char *m) {
+int lenght(char* m) {
 	int len = 0, i = 0;
 	while (m[i++] != '\0') {
 		len++;
