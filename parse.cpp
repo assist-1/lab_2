@@ -31,7 +31,6 @@ int precedence(char op){
 	if (op == '+' || op == '-') return 1;
 	if (op == '*' || op == '/') return 2;
     if (op == '^') return 2;
-    if (op == '(') return 4;
 	return 0;
 }
 
@@ -54,10 +53,8 @@ void op() {
         Symbol == '/' ||
         Symbol == '^')
     {
-    ++Ops_len;
-    Ops[Ops_len] = Symbol;
     char op; int a, b;
-    while (Ops_len && precedence(Ops[Ops_len]) >= precedence(Ops[Ops_len - 1]) && Digits_len > 1) {
+    while (Ops_len && precedence(Ops[Ops_len]) >= precedence(Symbol) && Digits_len > 1) {
         op = Ops[Ops_len];
         --Ops_len;
         b = Digits[Digits_len];
@@ -65,6 +62,7 @@ void op() {
         a = Digits[Digits_len];
         Digits[Digits_len] = eval(a, b, op);
     }
+    ++Ops_len;
     Ops[Ops_len] = Symbol;
     }
 }
@@ -79,7 +77,7 @@ void parenthesis() {
             break;
         case ')':
             char op; int a, b; 
-            while ((Ops[Ops_len] != '(') && Digits_len > 1) {
+            while ((Ops[Ops_len] != '(')) {
                 op = Ops[Ops_len];
                 --Ops_len;
                 b = Digits[Digits_len];
