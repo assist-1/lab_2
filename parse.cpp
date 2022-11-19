@@ -103,9 +103,7 @@ void digit() {
 }
 
 
-// int parse(bool from_file) {
-int main() {
-    bool from_file = false;
+int parse(bool from_file) {
     if (from_file) {
         if (!input) {
             std::cerr << "Unable to open input file" << std::endl;
