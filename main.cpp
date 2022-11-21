@@ -59,56 +59,23 @@ int main(int argc, char **argv) {
         }
     }
 
-    //обработка выражения
-    double *stack_nums = new double[200];
-    char *stack_signs = new char[200];
-    int nums_count=0, signs_count=0;
+    //обработка прямой нотации
     if(notation == 1){
         //проверка правильности математического выражения
-//        std::cout << check_forward(str, str_len) << std::endl;
         if(check_forward(str, str_len)){
-            int d_begin=-1, d_end=-1;
-            for(int i = 0; i < str_len; ++i){
-                if(str[i] >= '0' && str[i] <='9' || str[i] == '.') {
-                    if (d_begin == -1) {
-                        d_begin = i;
-                    }
-                }
-                else{
-                    if(d_begin != -1){
-                            d_end = i - 1;
-                            char *new_double = new char[d_end - d_begin + 1];
-                            for(int j=0; j <= d_end - d_begin; ++j){
-                                new_double[j] = str[d_begin + j];
-                            }
-                            stack_nums[nums_count] = make_double(new_double, d_end - d_begin + 1);
-                            ++nums_count;
-                            delete []new_double;
-                            d_begin = -1; d_end = -1;
-                    }
-                    else {
-                        if(str[i] == '+' || str[i] == '-') {
-                            if (i - 1 >= 0 && !(str[i] >= '0' && str[i] <= '9')) {
-                                d_begin = i;
-                            } else {
-                                stack_signs[signs_count] = str[i];
-                            }
-                        }
-                        else if(str[i] != ' '){
-                            stack_signs[signs_count] = str[i];
-                        }
-                    }
-                }
-            }
+           std::cout << "Your expression is right.\n";
         } else{
-            std::cerr << "Your expression is wrong.";
+            std::cerr << "Your expression is wrong.\n";
         }
 
-
+    //обработка польской нотации
     } else if(notation == 2){
-        int i = 2;
-        std::cout << "Type an expression in RPN." << std::endl;
+        if(check_reverse(str, str_len)){
+            std::cout << calculate_reverse(str, str_len);
+        }
+        else{
+            std::cerr << "Your expression is wrong.\n";
+        }
     }
-
     return 0;
 }
