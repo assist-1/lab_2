@@ -1,0 +1,2 @@
+int math();
+int opz();
