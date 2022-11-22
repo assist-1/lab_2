@@ -61,10 +61,10 @@ int main(int argc, char **argv) {
 
     //обработка прямой нотации
     if(notation == 1){
-        //проверка правильности математического выражения
         if(check_forward(str, str_len)){
-           std::cout << "Your expression is right.\n";
-//           char* reversed = forward_to_reverse(str, str_len);
+           char* reversed = forward_to_reverse(str, str_len);
+           std::cout << calculate_reverse(reversed, len_of_reversed(reversed));
+           delete []reversed;
         } else{
             std::cerr << "Your expression is wrong.\n";
         }
