@@ -64,6 +64,7 @@ int main(int argc, char **argv) {
         //проверка правильности математического выражения
         if(check_forward(str, str_len)){
            std::cout << "Your expression is right.\n";
+//           char* reversed = forward_to_reverse(str, str_len);
         } else{
             std::cerr << "Your expression is wrong.\n";
         }

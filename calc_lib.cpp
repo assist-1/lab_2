@@ -65,17 +65,17 @@ double make_double(char str_double[],int len){
 int priority(char symbol){
     switch (symbol){
         case '(':
-            return -1;
+            return 3;
         case ')':
-            return -1;
+            return 3;
         case '*':
-            return 1;
+            return 2;
         case '/':
-            return 1;
+            return 2;
         case '-':
-            return 2;
+            return 1;
         case '+':
-            return 2;
+            return 1;
     }
     return 0;
 }
@@ -120,25 +120,30 @@ bool check_forward(char expression[], const int len){
             }
         }
         else if(expression[i] == '-' or expression[i] == '+'){
-            if(types[types_count - 1] == 4 && types[types_count] == 5 || types[types_count] == 4){
+            if((types[types_count - 1] == 4 && types[types_count] == 5) || types[types_count] == 4){
                 return false;
             }
-            if(i + 1 < len){
-                if(expression[i + 1] >= '0' && expression[i + 1] <= '9' || expression[i + 1] == '.'){
-                    if(expression[i + 1] >= '0' && expression[i + 1] <= '9') {
-                        if(types[types_count] != 1){
-                            if(types[types_count] == 2 || types[types_count] == 5 && types[types_count - 1] == 2 || types[types_count] == 0){
-                                ++types_count;
-                                types[types_count] = 1;
-                                dot = 0;
-                            } else{
-                                return false;
-                            }
-                        } else{
-                            ++types_count;
-                            types[types_count] = 4;
-                        }
-                    } else{
+            if(i - 1 >= 0 && expression[i - 1] >= '0' && expression[i - 1] <= '9'){
+                ++types_count;
+                types[types_count] = 4;
+            }
+            else if(i + 1 < len){
+                if(expression[i + 1] >= '0' && expression[i + 1] <= '9'){
+                    if(types[types_count] == 3){
+                        ++types_count;
+                        types[types_count] = 4;
+                    }
+                    else if(types_count >= 1 && (types[types_count] == 2 || (types[types_count] == 5 && types[types_count - 1] == 2))){
+                        ++types_count;
+                        types[types_count] = 1;
+                        dot = 0;
+                    }
+                    else if(types_count < 1){
+                        ++types_count;
+                        types[types_count] = 1;
+                        dot = 0;
+                    }
+                    else{
                         return false;
                     }
                 } else{
@@ -181,7 +186,7 @@ bool check_forward(char expression[], const int len){
         return false;
     }
 
-    if(types[1] == 4 || types_count == 4) {
+    if(types[1] == 4 || types[types_count] == 4) {
         return false;
     }
     for(int i = 2; i < types_count; ++i){
@@ -221,14 +226,14 @@ bool check_reverse(char expression[], int len){
             if(i - 1 >= 0 && i + 1 < len && (expression[i - 1] >= '0' && expression[i - 1] <= '9') && (expression[i + 1] >= '0' && expression[i + 1] <= '9')){
                 return false;
             }
-            else if(i - 1 >= 0 && !(expression[i - 1] >= '0' && expression[i - 1] <= '9')){
-                ++types_count;
-                types[types_count] = 2;
-            }
             else if(i + 1 < len && expression[i + 1] >= '0' && expression[i + 1] <= '9'){
                 ++types_count;
                 types[types_count] = 1;
                 dot = 0;
+            }
+            else if(i - 1 >= 0 && !(expression[i - 1] >= '0' && expression[i - 1] <= '9')){
+                ++types_count;
+                types[types_count] = 2;
             }
             else{
                 ++types_count;
@@ -272,15 +277,16 @@ double calculate_reverse(char expression[], int len){
     int i = 0;
     while(i < len){
         if((expression[i] >= '0' && expression[i] <= '9') ||
-                ((expression[i] == '-' || expression[i] == '+') && (i + 1 < len) && (expression[i] >= '0' && expression[i] <= '9'))){
+                ((expression[i] == '-' || expression[i] == '+') && (i + 1 < len) && (expression[i + 1] >= '0' && expression[i + 1] <= '9'))){
             n_begin = i;
-            while(i < len && (expression[i] >= '0' && expression[i] <= '9' || expression[i] == '.')){
+            while(i < len && (expression[i] >= '0' && expression[i] <= '9' || expression[i] == '.' ||
+                    expression[i] == '+' || expression[i] == '-')){
                 ++i;
             }
             n_end = i - 1;
             char* new_double = new char[n_end - n_begin + 1];
-            for(int i=0; i < n_end - n_begin + 1; ++i){
-                new_double[i] = expression[n_begin + i];
+            for(int j=0; j < n_end - n_begin + 1; ++j){
+                new_double[j] = expression[n_begin + j];
             }
             nums[nums_count] = make_double(new_double, n_end - n_begin + 1);
             ++nums_count;
@@ -299,4 +305,5 @@ double calculate_reverse(char expression[], int len){
     }
     return nums[0];
 }
+
 
