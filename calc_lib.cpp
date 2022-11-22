@@ -65,9 +65,9 @@ double make_double(char str_double[],int len){
 int priority(char symbol){
     switch (symbol){
         case '(':
-            return 3;
+            return -1;
         case ')':
-            return 3;
+            return -1;
         case '*':
             return 2;
         case '/':
@@ -352,15 +352,17 @@ char* forward_to_reverse(char expression[], int len){
                 expression[i] == '/' || expression[i] == '(' || expression[i] == ')'){
             if(expression[i] == ')'){
                 while(operators[operators_count - 1] != '('){
-                    reversed[r_count] += operators[operators_count]; ++r_count;
+                    reversed[r_count] += operators[operators_count - 1]; ++r_count;
                     reversed[r_count] += ' '; ++r_count;
-                    operators[operators_count - 1] = ' '; --operators_count;
+                    operators[operators_count - 1] = ' ';
+                    --operators_count;
                 }
                 operators[operators_count - 1] = ' '; --operators_count;
             }
             else if(expression[i] == '('){
                 operators[operators_count] = '(';
                 ++operators_count;
+
             }
             else if(priority(operators[operators_count - 1]) >= priority(expression[i])){
                 reversed[r_count] = operators[operators_count - 1]; ++r_count;
@@ -382,11 +384,6 @@ char* forward_to_reverse(char expression[], int len){
         operators[operators_count - 1] = ' '; --operators_count;
     }
     reversed[r_count] = ';';
-//    for(int j = 0; j < r_count; j++){
-//        std::cout << reversed[j];
-//    }
-//    std::cout<<"\n";
-//    delete []operators;
     return &reversed[0];
 }
 
