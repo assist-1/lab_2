@@ -157,7 +157,7 @@ bool check_forward(char expression[], const int len){
             }
         }
         else if(expression[i] == '*' or expression[i] == '/'){
-            if(types[types_count - 1] == 4){
+            if(types[types_count - 1] == 4 && types[types_count] == 5 || types[types_count] == 4){
                 delete []types;
                 return false;
             } else{
