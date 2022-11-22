@@ -237,7 +237,8 @@ bool check_reverse(char expression[], int len){
             }
         }
         else if(expression[i] == '-' || expression[i] == '+'){
-            if(i - 1 >= 0 && i + 1 < len && (expression[i - 1] >= '0' && expression[i - 1] <= '9') && (expression[i + 1] >= '0' && expression[i + 1] <= '9')){
+            if(i - 1 >= 0 && i + 1 < len && ((expression[i - 1] >= '0' && expression[i - 1] <= '9') &&
+            (expression[i + 1] >= '0' && expression[i + 1] <= '9') || (expression[i - 1] >= '0' && expression[i - 1] <= '9'))){
                 delete []types;
                 return false;
             }
