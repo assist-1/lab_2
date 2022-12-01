@@ -1,0 +1,17 @@
+TARGET = Calculator
+CC=g++
+CFLAGS = -c
+
+SOURCES = main1.cpp function.cpp
+OBJ = $(SOURCES: .cpp=.o)
+
+all: $(TARGET) 
+
+$(TARGET): $(OBJ)
+	$(CC) $(OBJ) -o $(TARGET)
+
+%.o : %.cpp
+	$(CC) $(CFLAGS) $< -o $@  
+
+clean:
+	rm -rf *.o $(TARGET)
